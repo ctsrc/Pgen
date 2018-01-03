@@ -47,8 +47,8 @@ Mutually exclusive with option `-s`.
 
 ## Installation
 
-Build from source (see section [*Building*](#building) below) and copy
-the `target/release/pgen` binary into your `~/bin/` or whatever.
+Build from source (see the [*Building*](#building) section below) and
+copy the `target/release/pgen` binary into your `~/bin/` or whatever.
 
 ## Building
 
