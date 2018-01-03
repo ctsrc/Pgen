@@ -46,7 +46,7 @@ Mutually exclusive with option `-s`.
 `--dice` Use six-sided dies instead of letting the computer pick words.
 Useful in case you distrust the ability or willingness of your computer
 to generate "sufficiently random" numbers. Even though `pgen` will
-["do the right thing" and use `/dev/urandom`](https://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers/)
+[*do the right thing* and use `/dev/urandom`](https://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers/)
 by default on Unix platforms, what if the hardware source(s) for the
 entropy that the `/dev/urandom` CSPRNG is collecting is rigged?
 With the `--dice` option you need not worry about *that* at least.
