@@ -44,6 +44,8 @@ Mutually exclusive with option `-s`.
 `-e` Print the entropy of the generated passphrase to stderr.
 
 `--dice` Use six-sided dies instead of letting the computer pick words.
+Useful in case you distrust the ability of your computer to generate
+"sufficiently random" numbers.
 
 `-h`, `--help` Show help and exit.
 
