@@ -13,10 +13,10 @@ the difference between them.
 
 ## Table of Contents
 
-* [Usage](#Usage)
-  - [Options](#Options)
-* [Installation](#Installation)
-* [Building](#Building)
+* [Usage](#usage)
+  - [Options](#options)
+* [Installation](#installation)
+* [Building](#building)
 
 ## Usage
 
@@ -47,7 +47,7 @@ Mutually exclusive with option `-s`.
 
 ## Installation
 
-Build from source. See section [*Building*](#Building) below.
+Build from source. See section [*Building*](#building) below.
 
 ## Building
 
