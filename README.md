@@ -21,7 +21,7 @@ the difference between them.
 ## Usage
 
 ```
-pgen [-s | -a] [-n *n*] [-e]
+pgen [-s | -a] [-n *n*] [-e] [--dice]
 pgen -h | --help
 ```
 
@@ -42,6 +42,8 @@ Mutually exclusive with option `-s`.
     used (meaning that the `-a` option was specified).
 
 `-e` Print the entropy of the generated passphrase to stderr.
+
+`--dice` Use six-sided dies instead of letting the computer pick words.
 
 `-h`, `--help` Show help and exit.
 
