@@ -44,8 +44,13 @@ Mutually exclusive with option `-s`.
 `-e` Print the entropy of the generated passphrase to stderr.
 
 `--dice` Use six-sided dies instead of letting the computer pick words.
-Useful in case you distrust the ability of your computer to generate
-"sufficiently random" numbers.
+Useful in case you distrust the ability or willingness of your computer
+to generate "sufficiently random" numbers. Even though `pgen` will
+["do the right thing" and use `/dev/urandom`](https://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers/)
+by default on Unix platforms, what if the hardware source(s) for the
+entropy that the `/dev/urandom` CSPRNG is collecting is rigged?
+With the `--dice` option you need not worry about *that* at least.
+(But if you worry about that, have you considered the risk of [undetectable](http://www.tomsitpro.com/articles/it_security-rootkit-computer_security-computer_security,2-147-3.html) [malware](https://www.theregister.co.uk/2017/06/08/vxers_exploit_intels_amt_for_malwareoverlan/)?)
 
 `-h`, `--help` Show help and exit.
 
