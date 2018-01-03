@@ -1,4 +1,4 @@
-# pgen -- Passphrase Generator
+# pgen – Passphrase Generator
 
 [![xkcd: Password Strength](https://imgs.xkcd.com/comics/password_strength.png)](https://xkcd.com/936/)
 
