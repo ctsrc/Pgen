@@ -43,7 +43,7 @@ Mutually exclusive with option `-s`.
 
 `-e` Print the entropy of the generated passphrase to stderr.
 
-`--dice` Use six-sided dies instead of letting the computer pick words.
+`--dice` Use six-sided dice instead of letting the computer pick words.
 Useful in case you distrust the ability or willingness of your computer
 to generate "sufficiently random" numbers. Even though `pgen` will
 [*do the right thing* and use `/dev/urandom`](https://sockpuppet.org/blog/2014/02/25/safely-generate-random-numbers/)
