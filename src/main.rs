@@ -38,7 +38,7 @@ fn read_dice (n: u32) -> usize
     {
         let mut input = String::new();
 
-        stdin().read_line(&mut input);
+        stdin().read_line(&mut input).unwrap();
 
         for c in input.chars()
         {
