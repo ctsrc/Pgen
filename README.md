@@ -20,20 +20,20 @@ wordlists.
 ## Usage
 
 ```
-pgen [--dice] [-s | -l] [-e] [-n <n>]
+pgen [--dice] [-l | -s] [-e] [-n <n>]
 pgen -h | --help
 ```
 
 ### Options
-
-`-s` Use non-optimized short wordlist instead of autocomplete-optimized
-     short wordlist. Mutually exclusive with option `-l`.
 
 `-l` Use long wordlist instead of autocomplete-optimized short wordlist.
      Recommended for the creation of memorable passphrases since the
      increased word length allows for good entropy with a lower amount
      of words compared to the autocomplete-optimized short wordlist.
      Mutually exclusive with option `-s`.
+
+`-s` Use non-optimized short wordlist instead of autocomplete-optimized
+     short wordlist. Mutually exclusive with option `-l`.
 
 `-e` Print the entropy of the generated passphrase to stderr.
 
