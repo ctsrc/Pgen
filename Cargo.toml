@@ -1,7 +1,13 @@
 [package]
 name = "pgen"
-version = "0.2.0"
+description = "Passphrase Generator"
+license = "ISC"
+license-file = "LICENSE"
+documentation = "https://github.com/yarwelp/pgen/blob/master/README.md"
+repository = "https://github.com/yarwelp/pgen"
+version = "0.2.1"
 authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
+homepage = "https://yarwelp.github.io/pgen/"
 
 [dependencies]
 rand = "0.4"
