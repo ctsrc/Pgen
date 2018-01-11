@@ -1,7 +1,6 @@
 [package]
 name = "pgen"
 description = "Passphrase Generator"
-license = "ISC"
 license-file = "LICENSE"
 documentation = "https://github.com/yarwelp/pgen/blob/master/README.md"
 repository = "https://github.com/yarwelp/pgen"
