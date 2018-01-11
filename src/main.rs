@@ -43,7 +43,8 @@ fn read_dice (n: u32) -> u32
             {
                 '1' | '2' | '3' | '4' | '5' | '6' =>
                 {
-                    result += (c.to_digit(10).unwrap() - 1) * (6 as u32).pow(i);
+                    result += (c.to_digit(10).unwrap() - 1) *
+                        (6 as u32).pow(n - i - 1);
                     i += 1;
                 },
                 _ => {}
