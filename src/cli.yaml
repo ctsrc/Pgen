@@ -4,12 +4,12 @@ about: Passphrase Generator
 args:
         - use_short_wlist:
                 short: s
-                help: Use short wordlist.
-                conflicts_with: use_autocomplete_optimized_wlist
-        - use_autocomplete_optimized_wlist:
-                short: a
-                help: Use auto-complete-optimized wordlist.
-                conflicts_with: s
+                help: Use non-optimized short wordlist.
+                conflicts_with: use_long_wlist
+        - use_long_wlist:
+                short: l
+                help: Use long wordlist.
+                conflicts_with: use_short_wlist
         - num_words:
                 short: n
                 help: Specify the number of words to use.

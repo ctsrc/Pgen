@@ -66,16 +66,15 @@ fn main ()
 
     let opt_use_physical_dice = args.is_present("use_physical_dice");
     let opt_use_short_wlist = args.is_present("use_short_wlist");
-    let opt_use_autocomplete_optimized_wlist =
-        args.is_present("use_autocomplete_optimized_wlist");
+    let opt_use_long_wlist = args.is_present("use_long_wlist");
 
-    let mut num_dice: u32 = 5;
-    if opt_use_short_wlist || opt_use_autocomplete_optimized_wlist
+    let mut num_dice: u32 = 4;
+    if opt_use_long_wlist
     {
-        num_dice = 4;
+        num_dice = 5;
     }
 
-    let mut num_words: usize = 6;
+    let mut num_words: usize = 12;
     if args.is_present("num_words")
     {
         num_words = args.value_of("num_words").unwrap().parse::<usize>().unwrap();
@@ -86,9 +85,9 @@ fn main ()
         {
             num_words = 8;
         }
-        else if opt_use_autocomplete_optimized_wlist
+        else if opt_use_long_wlist
         {
-            num_words = 12;
+            num_words = 6;
         }
     }
 

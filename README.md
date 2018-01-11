@@ -5,11 +5,10 @@
 Generate passphrases using the [wordlists for random passphrases][EFFWL]
 made by the EFF.
 
-By default, generated passphrases consist of six words randomly selected
-from the large wordlist.
-
-Be sure to [read the article about the wordlists][EFFWL] to learn about
-the difference between them.
+By default, generated passphrases consist of twelve words randomly
+selected from the autocomplete-optimized wordlist. Be sure to
+[read the article][EFFWL] to learn about the difference between the
+wordlists.
 
 ## Table of Contents
 
@@ -21,27 +20,28 @@ the difference between them.
 ## Usage
 
 ```
-pgen [-s | -a] [-n *n*] [-e] [--dice]
+pgen [--dice] [-s | -l] [-e] [-n *n*]
 pgen -h | --help
 ```
 
 ### Options
 
-`-s` Use short wordlist. Mutually exclusive with option `-a`.
+`-s` Use non-optimized short wordlist instead of autocomplete-optimized
+     short wordlist. Mutually exclusive with option `-l`.
 
-`-a` Use autocomplete-optimized wordlist.
-Mutually exclusive with option `-s`.
+`-l` Use long wordlist instead of autocomplete-optimized short wordlist.
+     Mutually exclusive with option `-s`.
+
+`-e` Print the entropy of the generated passphrase to stderr.
 
 `-n` Specify the number of words to use *n*. Default value:
 
+  * Twelve (12) words if the autocomplete-optimized wordlist is being used
+    (meaning that neither the `-s` nor the `-l` option was specified).
+  * Eight (8) words if the non-optimized short wordlist is being used
+    (meaning that the `-s` option was specified).
   * Six (6) words if the large wordlist is being used (meaning that
-    neither the `-s` nor the `-a` option was specified).
-  * Eight (8) words if the short wordlist is being used (meaning that
-    the `-s` option was specified).
-  * Twelve (12) words if the autocomplete-optimized wordlist is being
-    used (meaning that the `-a` option was specified).
-
-`-e` Print the entropy of the generated passphrase to stderr.
+    the `-l` option was specified.)
 
 `--dice` Use physical six-sided dice instead of letting the computer pick
 words. Useful in case you distrust the ability or willingness of your
