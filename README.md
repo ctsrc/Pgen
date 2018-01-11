@@ -20,7 +20,7 @@ wordlists.
 ## Usage
 
 ```
-pgen [--dice] [-s | -l] [-e] [-n *n*]
+pgen [--dice] [-s | -l] [-e] [-n <n>]
 pgen -h | --help
 ```
 
