@@ -28,8 +28,9 @@ pgen -h | --help
 
 `-l` Use long wordlist instead of autocomplete-optimized short wordlist.
      Recommended for the creation of memorable passphrases since the
-     increased word length allows for good entropy with a lower amount
-     of words compared to the autocomplete-optimized short wordlist.
+     increased number of words as well as the greater effective word
+     length allows for good entropy with a lower amount of words
+     compared to the autocomplete-optimized short wordlist.
      Mutually exclusive with option `-s`.
 
 `-s` Use non-optimized short wordlist instead of autocomplete-optimized
