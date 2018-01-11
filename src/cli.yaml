@@ -2,22 +2,22 @@ name: pgen
 version: "0.1.0"
 about: Passphrase Generator
 args:
-        - use_short_wlist:
-                short: s
-                help: Use non-optimized short wordlist.
-                conflicts_with: use_long_wlist
+        - use_physical_dice:
+                long: dice
+                help: Use physical six-sided dice instead of letting the computer pick words.
         - use_long_wlist:
                 short: l
                 help: Use long wordlist.
                 conflicts_with: use_short_wlist
+        - use_short_wlist:
+                short: s
+                help: Use non-optimized short wordlist.
+                conflicts_with: use_long_wlist
+        - print_entropy:
+                short: e
+                help: Print the entropy of the generated passphrase to stderr.
         - num_words:
                 short: n
                 help: Specify the number of words to use.
                 value_name: n
                 takes_value: true
-        - print_entropy:
-                short: e
-                help: Print the entropy of the generated passphrase to stderr.
-        - use_physical_dice:
-                long: dice
-                help: Use physical six-sided dice instead of letting the computer pick words.
