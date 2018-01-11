@@ -55,6 +55,8 @@ the risk of *undetectable malware*? \[[2](http://www.tomsitpro.com/articles/it_s
 
 `-h`, `--help` Show help and exit.
 
+`-V`, `--version` Print version information and exit.
+
 ## Installation
 
 Build from source (see the [*Building*](#building) section below) and
