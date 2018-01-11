@@ -41,10 +41,10 @@ pgen -h | --help
 
   * Twelve (12) words if the autocomplete-optimized wordlist is being used
     (meaning that neither the `-s` nor the `-l` option was specified).
-  * Eight (8) words if the non-optimized short wordlist is being used
-    (meaning that the `-s` option was specified).
   * Six (6) words if the large wordlist is being used (meaning that
     the `-l` option was specified.)
+  * Eight (8) words if the non-optimized short wordlist is being used
+    (meaning that the `-s` option was specified).
 
 `--dice` Use physical six-sided dice instead of letting the computer pick
 words. Useful in case you distrust the ability or willingness of your

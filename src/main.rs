@@ -24,7 +24,10 @@ extern crate rand;
 use rand::os::OsRng;
 use rand::Rng;
 
-fn read_dice (n: u32) -> u32
+// https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
+include!(concat!(env!("OUT_DIR"), "/wordlists.rs"));
+
+fn read_dice (n: u32) -> usize
 {
     eprint!("Throw {} dice and enter the number of eyes shown on each: ", n);
 
@@ -57,7 +60,7 @@ fn read_dice (n: u32) -> u32
         }
     }
 
-    return result;
+    return result as usize;
 }
 
 fn main ()
@@ -92,7 +95,7 @@ fn main ()
         }
     }
 
-    let mut word_idx = vec![0; num_words];
+    let mut word_idx = vec![0 as usize; num_words];
 
     if opt_use_physical_dice
     {
@@ -108,13 +111,24 @@ fn main ()
 
         for i in 0..num_words
         {
-            word_idx[i] = rng.gen_range(0, (6 as u32).pow(num_dice) + 1);
+            word_idx[i] = rng.gen_range(0, (6 as u32).pow(num_dice))
+                as usize;
         }
+    }
+
+    let mut wordlist = WL_AUTOCOMPLETE;
+    if opt_use_long_wlist
+    {
+        wordlist = WL_LONG;
+    }
+    else if opt_use_short_wlist
+    {
+        wordlist = WL_SHORT;
     }
 
     for i in 0..num_words
     {
-        print!("{}", word_idx[i]);
+        print!("{}", wordlist[word_idx[i]]);
 
         if i < (num_words - 1)
         {
