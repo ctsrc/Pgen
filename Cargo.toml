@@ -3,6 +3,7 @@ name = "pgen"
 description = "Passphrase Generator"
 license-file = "LICENSE"
 documentation = "https://github.com/yarwelp/pgen/blob/master/README.md"
+readme = "README.md"
 repository = "https://github.com/yarwelp/pgen"
 version = "0.2.2"
 authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
