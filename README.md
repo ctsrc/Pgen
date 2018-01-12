@@ -15,7 +15,6 @@ wordlists.
 * [Usage](#usage)
   - [Options](#options)
 * [Installation](#installation)
-* [Building](#building)
 
 ## Usage
 
@@ -63,14 +62,8 @@ the risk of *undetectable malware*? \[[2](http://www.tomsitpro.com/articles/it_s
 
 ## Installation
 
-Build from source (see the [*Building*](#building) section below) and
-copy the `target/release/pgen` binary into your `~/bin/` or whatever.
-
-## Building
-
 1. [Install Rust](https://www.rust-lang.org/en-US/install.html).
-2. Issue `cargo build --release` in the root directory of the cloned repo.
-
+2. Run `cargo install pgen`
 
 
 [EFFWL]: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
