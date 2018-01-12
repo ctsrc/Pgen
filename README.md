@@ -21,6 +21,7 @@ wordlists.
 ```
 pgen [--dice] [-l | -s] [-e] [-n <n>]
 pgen -h | --help
+pgen -V | --version
 ```
 
 ### Options
