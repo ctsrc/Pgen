@@ -37,6 +37,8 @@ pgen -V | --version
      short wordlist. Mutually exclusive with option `-l`.
 
 `-e` Print the entropy of the generated passphrase to stderr.
+     What is password entropy? [Entropy is a measure of what the password
+     could have been, so it relates to the selection process](https://crypto.stackexchange.com/a/376).
 
 `-n` Specify the number of words to use *n*. Default value:
 
