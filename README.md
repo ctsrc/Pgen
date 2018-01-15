@@ -86,7 +86,7 @@ In the case of web services such as webmail, social networks, etc.,
 given that historically we have seen password databases leaked, where
 weak hashing algorithms such as MD5 were used, it is the opinion of the
 author that the neighbourhood of 128 bits of entropy is in fact
-appropriate for such use.
+an appropriate default for such use.
 
 When calculating the entropy of a password or a passphrase,
 [one must assume that the password generation procedure is known to the attacker](https://crypto.stackexchange.com/a/376).
