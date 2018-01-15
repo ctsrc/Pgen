@@ -69,8 +69,9 @@ How many bits of entropy should your passphrase consist of?
 Looking at [the article about password strength on Wikipedia](https://en.wikipedia.org/wiki/Password_strength), you will find that the following is said:
 
 > The minimum number of bits of entropy needed for a password depends
-> on the threat model for the given application. If key stretching is
-> not used, passwords with more entropy are needed.
+> on the threat model for the given application. If
+> [key stretching](https://en.wikipedia.org/wiki/Key_stretching)
+> is not used, passwords with more entropy are needed.
 > [RFC 4086](https://tools.ietf.org/html/rfc4086), "Randomness Requirements
 > for Security", presents some example threat models and how to calculate
 > the entropy desired for each one. Their answers vary between 29 bits
