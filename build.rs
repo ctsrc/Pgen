@@ -3,6 +3,8 @@ use std::fs::File;
 use std::io::{BufRead, BufReader, Write};
 use std::path::Path;
 
+// https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
+
 fn words (mut f_dest: &File, const_name: &str, fname_src: &str)
 {
     f_dest.write_all(b"const ").unwrap();
