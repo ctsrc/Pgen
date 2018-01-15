@@ -8,6 +8,7 @@ repository = "https://github.com/yarwelp/pgen"
 version = "0.2.5"
 authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
 homepage = "https://yarwelp.github.io/pgen/"
+categories = ["command-line-utilities", "cryptography"]
 
 [dependencies]
 rand = "0.4"
