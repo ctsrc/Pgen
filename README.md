@@ -14,6 +14,7 @@ wordlists.
 
 * [Usage](#usage)
   - [Options](#options)
+* [How many bits of entropy does your passphrase need?](#how-many-bits-of-entropy-does-your-passphrase-need)
 * [Installation](#installation)
 
 ## Usage
@@ -42,12 +43,10 @@ pgen -V | --version
 
 `-n` Specify the number of words to use *n*. Default value:
 
-  * Twelve (12) words if the autocomplete-optimized wordlist is being used
-    (meaning that neither the `-s` nor the `-l` option was specified).
-  * Six (6) words if the large wordlist is being used (meaning that
+  * Twelve (12) words if either of the short wordlists are being used
+    (meaning that the `-l` option was **not** specified).
+  * Ten (10) words if the large wordlist is being used (meaning that
     the `-l` option was specified.)
-  * Eight (8) words if the non-optimized short wordlist is being used
-    (meaning that the `-s` option was specified).
 
 `--dice` Use physical six-sided dice instead of letting the computer pick
 words. Useful in case you distrust the ability or willingness of your
@@ -62,6 +61,36 @@ the risk of *undetectable malware*? \[[2](http://www.tomsitpro.com/articles/it_s
 `-h`, `--help` Show help and exit.
 
 `-V`, `--version` Print version information and exit.
+
+## How many bits of entropy does your passphrase need?
+
+How many bits of entropy should your passphrase consist of?
+
+Looking at [the article about password strength on Wikipedia](https://en.wikipedia.org/wiki/Password_strength), you will find that the following is said:
+
+> The minimum number of bits of entropy needed for a password depends
+> on the threat model for the given application. If key stretching is
+> not used, passwords with more entropy are needed.
+> [RFC 4086](https://tools.ietf.org/html/rfc4086), "Randomness Requirements
+> for Security", presents some example threat models and how to calculate
+> the entropy desired for each one. Their answers vary between 29 bits
+> of entropy needed if only online attacks are expected, and up to 128 bits
+> of entropy needed for important cryptographic keys used in applications
+> like encryption where the password or key needs to be secure for a long
+> period of time and stretching isn't applicable.
+
+In the case of web services such as webmail, social networks, etc.,
+given that historically we have seen password databases leaked, where
+weak hashing algorithms such as MD5 were used, it is the opinion of the
+author that the neighbourhood of 128 bits of entropy is in fact
+appropriate for such use.
+
+When calculating the entropy of a password or a passphrase,
+[one must assume that the password generation procedure is known to the attacker](https://crypto.stackexchange.com/a/376).
+Hence with 12 words from either of the short wordlists, each of which
+consist of 1296 words, we get a password entropy of log2(1296^12) ~=
+124.08 bits. Similarily, with 10 words from the long wordlist (7776 words),
+we get a password entropy of log2(7776^10) ~= 129.25 bits.
 
 ## Installation
 

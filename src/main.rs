@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2017 Erik Nordstrøm <erik@nordstroem.no>
+ * Copyright (c) 2018 Erik Nordstrøm <erik@nordstroem.no>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -83,16 +83,9 @@ fn main ()
     {
         num_words = args.value_of("num_words").unwrap().parse::<usize>().unwrap();
     }
-    else
+    else if opt_use_long_wlist
     {
-        if opt_use_short_wlist
-        {
-            num_words = 8;
-        }
-        else if opt_use_long_wlist
-        {
-            num_words = 6;
-        }
+        num_words = 10;
     }
 
     let mut word_idx = vec![0 as usize; num_words];
