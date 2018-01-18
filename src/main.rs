@@ -75,15 +75,20 @@ fn main ()
     let num_dice: u32 = if opt_use_long_wlist { 5 } else { 4 };
     let wl_length = (6 as u32).pow(num_dice);
 
-    let mut num_words: usize = 12;
-    if args.is_present("num_words")
-    {
-        num_words = args.value_of("num_words").unwrap().parse::<usize>().unwrap();
-    }
-    else if opt_use_long_wlist
-    {
-        num_words = 10;
-    }
+    let num_words: usize =
+
+        if args.is_present("num_words")
+        {
+            args.value_of("num_words").unwrap().parse::<usize>().unwrap()
+        }
+        else if opt_use_long_wlist
+        {
+            10
+        }
+        else
+        {
+            12
+        };
 
     let wordlist =
 
