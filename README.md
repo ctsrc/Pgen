@@ -22,7 +22,7 @@ different wordlists provided by the EFF.
 ## Usage
 
 ```
-pgen [--dice] [-l | -s] [-e] [-n <n>]
+pgen [--dice] [-l | -s] [-e] [-k <k>] [-n <n>]
 pgen -h | --help
 pgen -V | --version
 ```
@@ -39,9 +39,11 @@ pgen -V | --version
 `-s` Use non-optimized short wordlist instead of autocomplete-optimized
      short wordlist. Mutually exclusive with option `-l`.
 
-`-e` Print the entropy of the generated passphrase to stderr.
-     What is password entropy? [Entropy is a measure of what the password
-     could have been, so it relates to the selection process](https://crypto.stackexchange.com/a/376).
+`-e` Calculate and print the entropy for the passphrase(s) that would be
+     generated with the given settings. What is password entropy?
+     [Entropy is a measure of what the password could have been, so it relates to the selection process](https://crypto.stackexchange.com/a/376).
+
+`-k` Specify the number of passphrases to generate *k*. Default value: 1.
 
 `-n` Specify the number of words to use *n*. Default value:
 

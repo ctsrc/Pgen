@@ -35,6 +35,7 @@ fn main ()
     let opt_use_physical_dice = args.is_present("use_physical_dice");
     let opt_use_short_wlist = args.is_present("use_short_wlist");
     let opt_use_long_wlist = args.is_present("use_long_wlist");
+    let opt_calculate_entropy = args.is_present("calc_entropy");
 
     let wordlist =
 
@@ -54,6 +55,17 @@ fn main ()
     let num_dice: u32 = if opt_use_long_wlist { 5 } else { 4 };
     let wl_length = (6 as u32).pow(num_dice);
 
+    let num_passphrases: u32 =
+
+        if args.is_present("num_passphrases")
+        {
+            args.value_of("num_passphrases").unwrap().parse::<u32>().unwrap()
+        }
+        else
+        {
+            1
+        };
+
     let num_words: usize =
 
         if args.is_present("num_words")
@@ -69,42 +81,53 @@ fn main ()
             12
         };
 
-    if opt_use_physical_dice
+    if opt_calculate_entropy
     {
-        let mut word_idx = vec![0 as usize; num_words];
-
-        for i in 0..num_words
-        {
-            eprint!("Word {}. ", i + 1);
-            word_idx[i] = read_dice(num_dice);
-        }
-
-        for i in 0..num_words
-        {
-            print!("{}", wordlist[word_idx[i]]);
-
-            if i < (num_words - 1)
-            {
-                print!(" ");
-            }
-        }
+        unimplemented!();
     }
     else
     {
-        let mut rng = OsRng::new().unwrap();
-
-        for i in 0..num_words
+        for _ in 0..num_passphrases
         {
-            print!("{}", wordlist[rng.gen_range(0, wl_length) as usize]);
-
-            if i < (num_words - 1)
+            if opt_use_physical_dice
             {
-                print!(" ");
+                let mut word_idx = vec![0 as usize; num_words];
+
+                for i in 0..num_words
+                {
+                    eprint!("Word {}. ", i + 1);
+                    word_idx[i] = read_dice(num_dice);
+                }
+
+                for i in 0..num_words
+                {
+                    print!("{}", wordlist[word_idx[i]]);
+
+                    if i < (num_words - 1)
+                    {
+                        print!(" ");
+                    }
+                }
             }
+            else
+            {
+                let mut rng = OsRng::new().unwrap();
+
+                for i in 0..num_words
+                {
+                    print!("{}", wordlist[
+                        rng.gen_range(0, wl_length) as usize]);
+
+                    if i < (num_words - 1)
+                    {
+                        print!(" ");
+                    }
+                }
+            }
+
+            println!();
         }
     }
-
-    println!();
 }
 
 fn read_dice (n: u32) -> usize

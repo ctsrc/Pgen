@@ -1,5 +1,5 @@
 name: pgen
-version: "0.3.0"
+version: "0.4.0"
 about: Passphrase Generator
 args:
         - use_physical_dice:
@@ -13,9 +13,14 @@ args:
                 short: s
                 help: Use non-optimized short wordlist.
                 conflicts_with: use_long_wlist
-        - print_entropy:
+        - calc_entropy:
                 short: e
-                help: Print the entropy of the generated passphrase to stderr.
+                help: Calculate and print the entropy for the passphrase(s) that would be generated with the given settings.
+        - num_passphrases:
+                short: k
+                help: Specify the number of passphrases to generate.
+                value_name: k
+                takes_value: true
         - num_words:
                 short: n
                 help: Specify the number of words to use.
