@@ -83,7 +83,9 @@ fn main ()
 
     if opt_calculate_entropy
     {
-        unimplemented!();
+        println!("Current settings will create passphrases with {:.2} bits of entropy.", (num_words as f64) * (wl_length as f64).log2());
+        //println!(" - Wordlist length: {}", wl_length as u64);
+        //println!(" - Number of words in each passphrases: {}", num_words as u32);
     }
     else
     {
