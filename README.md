@@ -102,7 +102,7 @@ we get a password entropy of log2(7776^10) ~= 129.25 bits.
 
 Using a CSPRNG ensures uniform distribution of probability. This in turn
 ensures that the password entropy calculations are correct. Hence it is
-necessary to use a CSPRNG.
+useful to use a CSPRNG.
 
 ## Installation
 
