@@ -1,7 +1,5 @@
 # `pgen`(1) – Passphrase Generator
 
-[![xkcd: Password Strength](https://imgs.xkcd.com/comics/password_strength.png)](https://xkcd.com/936/)
-
 Generate passphrases using the [wordlists for random passphrases][EFFWL]
 made by the EFF.
 
