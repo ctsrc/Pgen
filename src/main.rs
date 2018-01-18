@@ -72,11 +72,7 @@ fn main ()
     let opt_use_short_wlist = args.is_present("use_short_wlist");
     let opt_use_long_wlist = args.is_present("use_long_wlist");
 
-    let mut num_dice: u32 = 4;
-    if opt_use_long_wlist
-    {
-        num_dice = 5;
-    }
+    let num_dice:  u32 = if opt_use_long_wlist {    5 } else {    4 };
 
     let mut num_words: usize = 12;
     if args.is_present("num_words")
@@ -109,15 +105,20 @@ fn main ()
         }
     }
 
-    let mut wordlist = WL_AUTOCOMPLETE;
-    if opt_use_long_wlist
-    {
-        wordlist = WL_LONG;
-    }
-    else if opt_use_short_wlist
-    {
-        wordlist = WL_SHORT;
-    }
+    let wordlist =
+
+        if opt_use_long_wlist
+        {
+            WL_LONG
+        }
+        else if opt_use_short_wlist
+        {
+            WL_SHORT
+        }
+        else
+        {
+            WL_AUTOCOMPLETE
+        };
 
     for i in 0..num_words
     {
