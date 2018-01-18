@@ -72,7 +72,8 @@ fn main ()
     let opt_use_short_wlist = args.is_present("use_short_wlist");
     let opt_use_long_wlist = args.is_present("use_long_wlist");
 
-    let num_dice:  u32 = if opt_use_long_wlist {    5 } else {    4 };
+    let num_dice: u32 = if opt_use_long_wlist { 5 } else { 4 };
+    let wl_length = (6 as u32).pow(num_dice);
 
     let mut num_words: usize = 12;
     if args.is_present("num_words")
@@ -82,27 +83,6 @@ fn main ()
     else if opt_use_long_wlist
     {
         num_words = 10;
-    }
-
-    let mut word_idx = vec![0 as usize; num_words];
-
-    if opt_use_physical_dice
-    {
-        for i in 0..num_words
-        {
-            eprint!("Word {}. ", i + 1);
-            word_idx[i] = read_dice(num_dice);
-        }
-    }
-    else
-    {
-        let mut rng = OsRng::new().unwrap();
-
-        for i in 0..num_words
-        {
-            word_idx[i] = rng.gen_range(0, (6 as u32).pow(num_dice))
-                as usize;
-        }
     }
 
     let wordlist =
@@ -120,17 +100,46 @@ fn main ()
             WL_AUTOCOMPLETE
         };
 
-    for i in 0..num_words
+    if opt_use_physical_dice
     {
-        print!("{}", wordlist[word_idx[i]]);
+        let mut word_idx = vec![0 as usize; num_words];
 
-        if i < (num_words - 1)
+        for i in 0..num_words
         {
-            print!(" ");
+            eprint!("Word {}. ", i + 1);
+            word_idx[i] = read_dice(num_dice);
         }
-        else
+
+        for i in 0..num_words
         {
-            println!();
+            print!("{}", wordlist[word_idx[i]]);
+
+            if i < (num_words - 1)
+            {
+                print!(" ");
+            }
+            else
+            {
+                println!();
+            }
+        }
+    }
+    else
+    {
+        let mut rng = OsRng::new().unwrap();
+
+        for i in 0..num_words
+        {
+            print!("{}", wordlist[rng.gen_range(0, wl_length) as usize]);
+
+            if i < (num_words - 1)
+            {
+                print!(" ");
+            }
+            else
+            {
+                println!();
+            }
         }
     }
 }
