@@ -72,6 +72,21 @@ fn main ()
     let opt_use_short_wlist = args.is_present("use_short_wlist");
     let opt_use_long_wlist = args.is_present("use_long_wlist");
 
+    let wordlist =
+
+        if opt_use_long_wlist
+        {
+            WL_LONG
+        }
+        else if opt_use_short_wlist
+        {
+            WL_SHORT
+        }
+        else
+        {
+            WL_AUTOCOMPLETE
+        };
+
     let num_dice: u32 = if opt_use_long_wlist { 5 } else { 4 };
     let wl_length = (6 as u32).pow(num_dice);
 
@@ -88,21 +103,6 @@ fn main ()
         else
         {
             12
-        };
-
-    let wordlist =
-
-        if opt_use_long_wlist
-        {
-            WL_LONG
-        }
-        else if opt_use_short_wlist
-        {
-            WL_SHORT
-        }
-        else
-        {
-            WL_AUTOCOMPLETE
         };
 
     if opt_use_physical_dice
