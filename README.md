@@ -17,6 +17,7 @@ different wordlists provided by the EFF.
 * [Usage](#usage)
   - [Options](#options)
 * [How many bits of entropy does your passphrase need?](#how-many-bits-of-entropy-does-your-passphrase-need)
+* [Is a CSPRNG really needed here?](#is-a-csprng-really-needed-here)
 * [Installation](#installation)
 
 ## Usage
@@ -96,6 +97,12 @@ Hence with 12 words from either of the short wordlists, each of which
 consist of 1296 words, we get a password entropy of log2(1296^12) ~=
 124.08 bits. Similarily, with 10 words from the long wordlist (7776 words),
 we get a password entropy of log2(7776^10) ~= 129.25 bits.
+
+## Is a CSPRNG really needed here?
+
+Using a CSPRNG ensures uniform distribution of probability. This in turn
+ensures that the password entropy calculations are correct. Hence it is
+necessary to use a CSPRNG.
 
 ## Installation
 
