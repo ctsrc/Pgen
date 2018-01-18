@@ -27,42 +27,6 @@ use rand::Rng;
 // https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
 include!(concat!(env!("OUT_DIR"), "/wordlists.rs"));
 
-fn read_dice (n: u32) -> usize
-{
-    eprint!("Throw {} dice and enter the number of eyes shown on each: ", n);
-
-    let mut result = 0;
-    let mut i = 0;
-
-    while i < n
-    {
-        let mut input = String::new();
-
-        stdin().read_line(&mut input).unwrap();
-
-        for c in input.chars()
-        {
-            match c
-            {
-                '1' | '2' | '3' | '4' | '5' | '6' =>
-                {
-                    result += (c.to_digit(10).unwrap() - 1) *
-                        (6 as u32).pow(n - i - 1);
-                    i += 1;
-                },
-                _ => {}
-            }
-
-            if i == n
-            {
-                break;
-            }
-        }
-    }
-
-    return result as usize;
-}
-
 fn main ()
 {
     let yaml = load_yaml!("cli.yaml");
@@ -141,4 +105,40 @@ fn main ()
     }
 
     println!();
+}
+
+fn read_dice (n: u32) -> usize
+{
+    eprint!("Throw {} dice and enter the number of eyes shown on each: ", n);
+
+    let mut result = 0;
+    let mut i = 0;
+
+    while i < n
+    {
+        let mut input = String::new();
+
+        stdin().read_line(&mut input).unwrap();
+
+        for c in input.chars()
+        {
+            match c
+            {
+                '1' | '2' | '3' | '4' | '5' | '6' =>
+                {
+                    result += (c.to_digit(10).unwrap() - 1) *
+                        (6 as u32).pow(n - i - 1);
+                    i += 1;
+                },
+                _ => {}
+            }
+
+            if i == n
+            {
+                break;
+            }
+        }
+    }
+
+    return result as usize;
 }
