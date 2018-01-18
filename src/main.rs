@@ -118,10 +118,6 @@ fn main ()
             {
                 print!(" ");
             }
-            else
-            {
-                println!();
-            }
         }
     }
     else
@@ -136,10 +132,8 @@ fn main ()
             {
                 print!(" ");
             }
-            else
-            {
-                println!();
-            }
         }
     }
+
+    println!();
 }
