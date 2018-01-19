@@ -10,6 +10,12 @@ randomly selected from the autocomplete-optimized wordlist. Be sure to
 [read the article][EFFWL] to learn about the difference between the
 different wordlists provided by the EFF.
 
+These are some examples of generated passphrases:
+
+ * gimmick saffron nirvana superstore voicemail dedicate guacamole oftentimes dwindling kingdom shuttle upright
+ * bobcat pulley yearbook nectar krypton pesticide relic sauna detergent amnesty dishcloth tapestry
+ * porcupine identical occupation oxidize avalanche celery vaporizer dastardly vicinity enlarged hatchling urethane
+
 ## Table of Contents
 
 * [Usage](#usage)
