@@ -2,12 +2,12 @@
 name = "pgen"
 description = "Passphrase Generator"
 license = "ISC"
-documentation = "https://github.com/yarwelp/pgen/blob/master/README.md"
+documentation = "https://github.com/ctsrc/pgen/blob/master/README.md"
 readme = "README.md"
-repository = "https://github.com/yarwelp/pgen"
+repository = "https://github.com/ctsrc/pgen"
 version = "1.0.1"
 authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
-homepage = "https://yarwelp.github.io/pgen/"
+homepage = "https://ctsrc.github.io/pgen/"
 categories = ["command-line-utilities", "cryptography"]
 
 [dependencies]
