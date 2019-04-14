@@ -1,5 +1,5 @@
 name: pgen
-version: "1.0.1"
+version: "1.0.3"
 about: Passphrase Generator
 args:
         - use_physical_dice:
