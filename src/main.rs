@@ -30,7 +30,7 @@ include!(concat!(env!("OUT_DIR"), "/wordlists.rs"));
 fn main ()
 {
     let yaml = load_yaml!("cli.yaml");
-    let args = App::from_yaml(yaml).get_matches();
+    let args = App::from_yaml(yaml).version(crate_version!()).get_matches();
 
     let opt_use_physical_dice = args.is_present("use_physical_dice");
     let opt_use_short_wlist = args.is_present("use_short_wlist");
