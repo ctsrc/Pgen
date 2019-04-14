@@ -95,9 +95,11 @@ fn main ()
             {
                 let mut word_idx = vec![0 as usize; num_words];
 
+                let width = format!("{}", num_words).len();
+
                 for i in 0..num_words
                 {
-                    eprint!("Word {}. ", i + 1);
+                    eprint!("Word {:>w$} / {}. ", i + 1, num_words, w = width);
                     word_idx[i] = read_dice(num_dice);
                 }
 
