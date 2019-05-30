@@ -27,7 +27,7 @@ These are some examples of generated passphrases:
 ## Usage
 
 ```
-pgen [--dice] [-l | -s] [-e] [-k <k>] [-n <n>]
+pgen [--dice] [-l | -s] [-n <n>] [-k <k>] [-e]
 pgen -h | --help
 pgen -V | --version
 ```
@@ -44,18 +44,18 @@ pgen -V | --version
 `-s` Use non-optimized short wordlist instead of autocomplete-optimized
      short wordlist. Mutually exclusive with option `-l`.
 
-`-e` Calculate and print the entropy for the passphrase(s) that would be
-     generated with the given settings. What is password entropy?
-     [Entropy is a measure of what the password could have been, so it relates to the selection process](https://crypto.stackexchange.com/a/376).
-
-`-k` Specify the number of passphrases to generate *k*. Default value: 1.
-
 `-n` Specify the number of words to use *n*. Default value:
 
   * Twelve (12) words if either of the short wordlists are being used
     (meaning that the `-l` option was **not** specified).
   * Ten (10) words if the large wordlist is being used (meaning that
     the `-l` option was specified.)
+
+`-k` Specify the number of passphrases to generate *k*. Default value: 1.
+
+`-e` Calculate and print the entropy for the passphrase(s) that would be
+     generated with the given settings. What is password entropy?
+     [Entropy is a measure of what the password could have been, so it relates to the selection process](https://crypto.stackexchange.com/a/376).
 
 `--dice` Use physical six-sided dice instead of letting the computer pick
 words. Useful in case you distrust the ability or willingness of your

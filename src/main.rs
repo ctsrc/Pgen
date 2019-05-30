@@ -21,7 +21,7 @@ extern crate clap;
 use clap::App;
 
 extern crate rand;
-use rand::os::OsRng;
+use rand::rngs::OsRng;
 use rand::Rng;
 
 // https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation

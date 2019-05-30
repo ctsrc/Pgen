@@ -5,11 +5,11 @@ license = "ISC"
 documentation = "https://github.com/ctsrc/Pgen/blob/master/README.md"
 readme = "README.md"
 repository = "https://github.com/ctsrc/Pgen"
-version = "1.0.4"
+version = "1.0.5"
 authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
 homepage = "https://ctsrc.github.io/Pgen"
 categories = ["command-line-utilities", "cryptography"]
 
 [dependencies]
-rand = "0.4"
-clap = {version = "~2.29.1", features = ["yaml"]}
+rand = "0.6.5"
+clap = { version = "2.33.0", features = ["yaml"] }
