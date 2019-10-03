@@ -1,5 +1,7 @@
 # `pgen`(1) – Passphrase Generator
 
+[![Crates.io](https://img.shields.io/crates/v/pgen.svg)](https://crates.io/crates/pgen)
+
 Generate passphrases using the [wordlists for random passphrases][EFFWL]
 made by the EFF.
 
