@@ -16,12 +16,11 @@
 
 use std::io::stdin;
 
-#[macro_use]
-extern crate clap;
+use clap::load_yaml;
+use clap::crate_version;
 use clap::App;
 
-extern crate rand;
-use rand::rngs::OsRng;
+use rand::thread_rng;
 use rand::Rng;
 
 // https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
@@ -115,7 +114,7 @@ fn main ()
             }
             else
             {
-                let mut rng = OsRng::new().unwrap();
+                let mut rng = thread_rng();
 
                 for i in 0..num_words
                 {
