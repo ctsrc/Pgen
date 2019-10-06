@@ -1,6 +1,6 @@
 [package]
 name = "pgen"
-version = "1.0.5"
+version = "1.1.0"
 authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
 edition = "2018"
 description = "Passphrase Generator"
