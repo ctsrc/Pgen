@@ -14,7 +14,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
-use std::io::stdin;
+use std::io;
+use std::io::{stdin, stdout, Write};
 
 use clap::load_yaml;
 use clap::crate_version;
@@ -26,7 +27,7 @@ use rand::Rng;
 // https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
 include!(concat!(env!("OUT_DIR"), "/wordlists.rs"));
 
-fn main ()
+fn main () -> io::Result<()>
 {
     let yaml = load_yaml!("cli.yaml");
     let args = App::from_yaml(yaml).version(crate_version!()).get_matches();
@@ -80,11 +81,14 @@ fn main ()
             12
         };
 
+    let stdout = stdout();
+    let mut handle = stdout.lock();
+
     if opt_calculate_entropy
     {
-        println!("Current settings will create passphrases with {:.2} bits of entropy.", (num_words as f64) * (wl_length as f64).log2());
-        //println!(" - Wordlist length: {}", wl_length as u64);
-        //println!(" - Number of words in each passphrases: {}", num_words as u32);
+        handle.write_fmt(format_args!(
+            "Current settings will create passphrases with {:.2} bits of entropy.",
+            (num_words as f64) * (wl_length as f64).log2()))?;
     }
     else
     {
@@ -104,11 +108,11 @@ fn main ()
 
                 for i in 0..num_words
                 {
-                    print!("{}", wordlist[word_idx[i]]);
+                    handle.write_all(wordlist[word_idx[i]].as_bytes())?;
 
                     if i < (num_words - 1)
                     {
-                        print!(" ");
+                        handle.write_all(b" ")?;
                     }
                 }
             }
@@ -118,19 +122,20 @@ fn main ()
 
                 for i in 0..num_words
                 {
-                    print!("{}", wordlist[
-                        rng.gen_range(0, wl_length) as usize]);
+                    handle.write_all(wordlist[rng.gen_range(0, wl_length) as usize].as_bytes())?;
 
                     if i < (num_words - 1)
                     {
-                        print!(" ");
+                        handle.write_all(b" ")?;
                     }
                 }
             }
 
-            println!();
+            handle.write_all(b"\n")?;
         }
     }
+
+    Ok(())
 }
 
 fn read_dice (n: u32) -> usize
