@@ -138,5 +138,5 @@ fn read_dice (n: u32) -> usize
     }
   }
 
-  usize
+  result as usize
 }
