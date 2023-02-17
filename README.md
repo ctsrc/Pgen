@@ -3,6 +3,7 @@
 [![Crates.io](https://img.shields.io/crates/v/pgen?style=flat-square)](https://crates.io/crates/pgen)
 [![Crates.io](https://img.shields.io/crates/d/pgen?style=flat-square)](https://crates.io/crates/pgen)
 [![License](https://img.shields.io/badge/license-ISC-blue?style=flat-square)](LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/ctsrc/Pgen?style=social)](https://github.com/ctsrc/Pgen#start-of-content)
 
 Generate passphrases using the [wordlists for random passphrases][EFFWL]
 made by the EFF.
