@@ -17,72 +17,76 @@
 use std::io;
 use std::io::{stdin, stdout, Write};
 
-use clap::crate_version;
-use clap::load_yaml;
-use clap::App;
+use clap::Parser;
 use rand::thread_rng;
 use rand::Rng;
 
 // https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
 include!(concat!(env!("OUT_DIR"), "/wordlists.rs"));
 
-fn main() -> io::Result<()> {
-    let yaml = load_yaml!("cli.yaml");
-    let args = App::from_yaml(yaml).version(crate_version!()).get_matches();
+#[derive(Parser)]
+#[command(author, version, about, long_about = None)]
+struct Cli {
+    /// Use physical six-sided dice instead of letting the computer pick words
+    #[arg(short = 'd', long = "dice")]
+    use_physical_dice: bool,
+    /// Use long wordlist
+    #[arg(short = 'l')]
+    use_long_wlist: bool,
+    /// Use non-optimized short wordlist
+    #[arg(short = 's', conflicts_with("use_long_wlist"))]
+    use_short_wlist: bool,
+    /// Specify the number of passphrases to generate k
+    #[arg(short, default_value_t = 1, value_name = "k")]
+    k: u32,
+    /// Specify the number of words to use
+    #[arg(short, value_name = "n")]
+    n: Option<usize>,
+    /// Calculate and print the entropy for the passphrase(s) that would be generated with the given settings
+    #[arg(short = 'e')]
+    calculate_entropy: bool,
+}
 
-    let opt_use_physical_dice = args.is_present("use_physical_dice");
-    let opt_use_short_wlist = args.is_present("use_short_wlist");
-    let opt_use_long_wlist = args.is_present("use_long_wlist");
-    let opt_calculate_entropy = args.is_present("calc_entropy");
+fn main() -> io::Result<()> {
+    let cli = Cli::parse();
 
     let wordlist = {
-        if opt_use_long_wlist {
+        if cli.use_long_wlist {
             WL_LONG
-        } else if opt_use_short_wlist {
+        } else if cli.use_short_wlist {
             WL_SHORT
         } else {
             WL_AUTOCOMPLETE
         }
     };
 
-    let num_dice: u32 = if opt_use_long_wlist { 5 } else { 4 };
+    let num_dice: u32 = if cli.use_long_wlist { 5 } else { 4 };
     let wl_length = (6u32).pow(num_dice);
 
-    let num_passphrases: u32 = {
-        if args.is_present("num_passphrases") {
-            args.value_of("num_passphrases")
-                .unwrap()
-                .parse::<u32>()
-                .unwrap()
-        } else {
-            1
-        }
-    };
+    let num_passphrases = cli.k;
 
-    let num_words: usize = {
-        if args.is_present("num_words") {
-            args.value_of("num_words")
-                .unwrap()
-                .parse::<usize>()
-                .unwrap()
-        } else if opt_use_long_wlist {
-            10
-        } else {
-            12
+    let num_words = match cli.n {
+        Some(n) => n,
+        None => {
+            if cli.use_long_wlist {
+                10
+            } else {
+                12
+            }
         }
     };
 
     let stdout = stdout();
     let mut handle = stdout.lock();
 
-    if opt_calculate_entropy {
+    if cli.calculate_entropy {
         handle.write_fmt(format_args!(
-            "Current settings will create passphrases with {:.2} bits of entropy.",
+            "Current settings will create passphrases with {:.2} bits of entropy.\n",
             (num_words as f64) * (wl_length as f64).log2()
         ))?;
     } else {
         for _ in 0..num_passphrases {
-            if opt_use_physical_dice {
+            if cli.use_physical_dice {
                 let mut word_idx = vec![0usize; num_words];
 
                 let width = format!("{num_words}").len();
@@ -102,7 +106,7 @@ fn main() -> io::Result<()> {
                 let mut rng = thread_rng();
 
                 for i in 0..num_words {
-                    handle.write_all(wordlist[rng.gen_range(0, wl_length) as usize].as_bytes())?;
+                    handle.write_all(wordlist[rng.gen_range(0..wl_length) as usize].as_bytes())?;
                     if i < (num_words - 1) {
                         handle.write_all(b" ")?;
                     }

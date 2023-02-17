@@ -10,5 +10,5 @@ categories = ["command-line-utilities", "cryptography"]
 edition = "2021"
 
 [dependencies]
-rand = "0.7.2"
-clap = { version = "2.33.0", default-features = false, features = ["yaml"] }
+rand = "0.8"
+clap = { version = "4.1", default-features = false, features = ["std", "derive", "help", "usage", "error-context"] }
