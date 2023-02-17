@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2018, 2019 Erik Nordstrøm <erik@nordstroem.no>
+ * Copyright (c) 2018, 2019, 2023 Erik Nordstrøm <erik@nordstroem.no>
  *
  * Permission to use, copy, modify, and/or distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above
@@ -45,7 +45,7 @@ fn main () -> io::Result<()>
   };
 
   let num_dice: u32 = if opt_use_long_wlist { 5 } else { 4 };
-  let wl_length = (6 as u32).pow(num_dice);
+  let wl_length = (6u32).pow(num_dice);
 
   let num_passphrases: u32 =
   {
@@ -75,9 +75,9 @@ fn main () -> io::Result<()>
     {
       if opt_use_physical_dice
       {
-        let mut word_idx = vec![0 as usize; num_words];
+        let mut word_idx = vec![0usize; num_words];
 
-        let width = format!("{}", num_words).len();
+        let width = format!("{num_words}").len();
 
         for i in 0..num_words
         {
@@ -111,7 +111,7 @@ fn main () -> io::Result<()>
 
 fn read_dice (n: u32) -> usize
 {
-  eprint!("Throw {} dice and enter the number of eyes shown on each: ", n);
+  eprint!("Throw {n} dice and enter the number of eyes shown on each: ");
 
   let mut result = 0;
   let mut i = 0;
@@ -128,7 +128,7 @@ fn read_dice (n: u32) -> usize
       {
         '1' | '2' | '3' | '4' | '5' | '6' =>
         {
-          result += (c.to_digit(10).unwrap() - 1) * (6 as u32).pow(n - i - 1);
+          result += (c.to_digit(10).unwrap() - 1) * (6u32).pow(n - i - 1);
           i += 1;
         },
         _ => {},
