@@ -20,7 +20,6 @@ use std::io::{stdin, stdout, Write};
 use clap::crate_version;
 use clap::load_yaml;
 use clap::App;
-
 use rand::thread_rng;
 use rand::Rng;
 
