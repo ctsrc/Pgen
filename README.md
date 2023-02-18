@@ -107,6 +107,10 @@ Using a CSPRNG ensures uniform distribution of probability. This in turn
 ensures that the password entropy calculations are correct. Hence it makes
 sense to use a CSPRNG.
 
+## See also
+
+* `lastresort`(1) on [crates.io](https://crates.io/crates/base256) / [GitHub](https://github.com/ctsrc/Base256)
+
 ## Installation
 
 1. [Install Rust](https://www.rust-lang.org/en-US/install.html).
