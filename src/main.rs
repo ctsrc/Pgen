@@ -14,6 +14,8 @@
  * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
 
+#![forbid(unsafe_code)]
+
 use std::io;
 use std::io::{stdin, stdout, Write};
 
