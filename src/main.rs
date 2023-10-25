@@ -93,9 +93,9 @@ fn main() -> io::Result<()> {
 
                 let width = format!("{num_words}").len();
 
-                for i in 0..num_words {
+                for (i, item) in word_idx.iter_mut().enumerate().take(num_words) {
                     eprint!("Word {:>w$} / {}. ", i + 1, num_words, w = width);
-                    word_idx[i] = read_dice(num_dice);
+                    *item = read_dice(num_dice);
                 }
 
                 for i in 0..num_words {
