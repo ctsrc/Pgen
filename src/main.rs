@@ -18,7 +18,6 @@
 
 use std::io;
 use std::io::{stdin, stdout, Write};
-
 use clap::Parser;
 use rand::thread_rng;
 use rand::Rng;
