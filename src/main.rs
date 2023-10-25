@@ -16,11 +16,11 @@
 
 #![forbid(unsafe_code)]
 
-use std::io;
-use std::io::{stdin, stdout, Write};
 use clap::Parser;
 use rand::thread_rng;
 use rand::Rng;
+use std::io;
+use std::io::{stdin, stdout, Write};
 
 // https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
 include!(concat!(env!("OUT_DIR"), "/wordlists.rs"));
