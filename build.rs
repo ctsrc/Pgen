@@ -6,19 +6,17 @@ use std::path::Path;
 // https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
 
 fn words(mut f_dest: &File, const_name: &str, fname_src: &str) {
-    f_dest.write_all(b"const ").unwrap();
-    f_dest.write_all(const_name.as_bytes()).unwrap();
-    f_dest.write_all(b": &[&str] = &[").unwrap();
+    write!(f_dest, "const {const_name}: &[&str] = &[").unwrap();
 
     let f_src = BufReader::new(File::open(fname_src).unwrap());
     for line in f_src.lines() {
-        f_dest.write_all(b"\"").unwrap();
-
-        f_dest
-            .write_all(line.unwrap().split('\t').nth(1).unwrap().as_bytes())
-            .unwrap();
-
-        f_dest.write_all(b"\",").unwrap();
+        match line {
+            Ok(line) => {
+                let word = line.split('\t').nth(1).unwrap();
+                write!(f_dest, "\"{word}\",").unwrap();
+            }
+            Err(_e) => panic!("Unable to read line from internal file"),
+        }
     }
 
     f_dest.write_all(b"];").unwrap();
