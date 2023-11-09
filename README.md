@@ -44,10 +44,12 @@ pgen -V | --version
      increased number of words as well as the greater effective word
      length allows for good entropy with a lower amount of words
      compared to the autocomplete-optimized short wordlist.
-     Mutually exclusive with option `-s`.
+     Mutually exclusive with option `-s`, `-b`.
 
 `-s` Use non-optimized short wordlist instead of autocomplete-optimized
-     short wordlist. Mutually exclusive with option `-l`.
+     short wordlist. Mutually exclusive with options `-l`, `-b`.
+
+`-b` Use BIP39 wordlist. Mutually exclusive with options `-l`, `-s`.
 
 `-n` Specify the number of words to use *n*. Default value:
 

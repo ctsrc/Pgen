@@ -37,6 +37,13 @@ struct Cli {
     /// Use non-optimized short wordlist
     #[arg(short = 's', conflicts_with("use_long_wlist"))]
     use_short_wlist: bool,
+    /// Use BIP39 wordlist
+    #[arg(
+        short = 'b',
+        conflicts_with("use_long_wlist"),
+        conflicts_with("use_short_wlist")
+    )]
+    use_bip39_wlist: bool,
     /// Specify the number of passphrases to generate k
     #[arg(short, default_value_t = 1, value_name = "k")]
     k: u32,
@@ -56,13 +63,28 @@ fn main() -> io::Result<()> {
             WL_LONG
         } else if cli.use_short_wlist {
             WL_SHORT
+        } else if cli.use_bip39_wlist {
+            WL_BIP39
         } else {
             WL_AUTOCOMPLETE
         }
     };
 
-    let num_dice: u32 = if cli.use_long_wlist { 5 } else { 4 };
-    let wl_length = (6u32).pow(num_dice);
+    // the EFF wordlists have lengths that are an exact power of 6,
+    // whereas the bip39 wordlist does not
+    let num_dice: u32 = if cli.use_bip39_wlist {
+        // bip39 has 2048 words, which is a power of 2.
+        // we need 11 dice because 6**11 / 3**11 = 2048,
+        // i.e. we use 11 dice because it leads to a multiple
+        // of the wordlist length
+        11
+    } else if cli.use_long_wlist {
+        // EFF long wordlist has 6**5 = 7776 words
+        5
+    } else {
+        // Other EFF wordlists have 6**4 = 1296 words
+        4
+    };
 
     let num_passphrases = cli.k;
 
@@ -83,7 +105,7 @@ fn main() -> io::Result<()> {
     if cli.calculate_entropy {
         handle.write_fmt(format_args!(
             "Current settings will create passphrases with {:.2} bits of entropy.\n",
-            (num_words as f64) * (wl_length as f64).log2()
+            (num_words as f64) * (wordlist.len() as f64).log2()
         ))?;
     } else {
         for _ in 0..num_passphrases {
@@ -94,7 +116,13 @@ fn main() -> io::Result<()> {
 
                 for (i, item) in word_idx.iter_mut().enumerate().take(num_words) {
                     eprint!("Word {:>w$} / {}. ", i + 1, num_words, w = width);
-                    *item = read_dice(num_dice);
+                    // For the sake of the bip39 wordlist, we modulo index by the wordlist length,
+                    // because the range of the possible values is a multiple of the wordlist length.
+                    //
+                    // With the EFF wordlists, the wordlist lengths match the range
+                    // of the numbers we get from the dice, so for EFF wordlists
+                    // this modulo does not change anything.
+                    *item = read_dice(num_dice) % wordlist.len();
                 }
 
                 for i in 0..num_words {
@@ -107,7 +135,9 @@ fn main() -> io::Result<()> {
                 let mut rng = thread_rng();
 
                 for i in 0..num_words {
-                    handle.write_all(wordlist[rng.gen_range(0..wl_length) as usize].as_bytes())?;
+                    handle.write_all(
+                        wordlist[rng.gen_range(0..wordlist.len()) as usize].as_bytes(),
+                    )?;
                     if i < (num_words - 1) {
                         handle.write_all(b" ")?;
                     }
