@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 
-members = ["crates/lexical-data", "crates/pgen", ]
+members = ["crates/bip39-lexical-data", "crates/eff-lexical-data", "crates/pgen", ]
 
 [workspace.dependencies]
 rand = "0.8.5"

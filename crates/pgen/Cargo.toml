@@ -12,4 +12,5 @@ edition = "2021"
 [dependencies]
 rand = { workspace = true }
 clap = { workspace = true }
-lexical-data = { path = "../lexical-data", version = "1.0.0-rc.1" }
+bip39-lexical-data = { path = "../bip39-lexical-data", version = "1.0.0-rc.1" }
+eff-lexical-data = { path = "../eff-lexical-data", version = "1.0.0-rc.1" }

@@ -16,8 +16,9 @@
 
 #![forbid(unsafe_code)]
 
+use bip39_lexical_data::WL_BIP39;
 use clap::{Parser, ValueEnum};
-use lexical_data::{WL_AUTOCOMPLETE, WL_BIP39, WL_LONG, WL_SHORT};
+use eff_lexical_data::{WL_AUTOCOMPLETE, WL_LONG, WL_SHORT};
 use rand::thread_rng;
 use rand::Rng;
 use std::io;
