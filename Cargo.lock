@@ -10,7 +10,7 @@ checksum = "8901269c6307e8d93993578286ac0edf7f195079ffff5ebdeea6a59ffb7e36bc"
 
 [[package]]
 name = "bip39-lexical-data"
-version = "1.0.0-rc.1"
+version = "1.0.0"
 
 [[package]]
 name = "cfg-if"
@@ -58,7 +58,7 @@ checksum = "98cc8fbded0c607b7ba9dd60cd98df59af97e84d24e49c8557331cfc26d301ce"
 
 [[package]]
 name = "eff-lexical-data"
-version = "1.0.0-rc.1"
+version = "1.0.0"
 
 [[package]]
 name = "getrandom"
