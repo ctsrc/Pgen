@@ -1,0 +1,110 @@
+QUICK START
+
+27 June 93
+Copy all the files on all the disks to a folder on your hard disk
+(make sure you have at least four (4) megabytes of free space
+per disk of Moby product for HD diskettes, two (2) megabytes of
+free space for DD diskettes.)
+Change your directory ('CD') to the folder, type BUILD and press (enter).
+The files that are extracted may be viewed and manipulated by any text
+editor or word processor capable of viewing and editing large text files.
+You may wish to divide the thesaurus files into five or more
+smaller files with your utility for performance reasons.
+
+Moby(tm) Thesaurus II Documentation Notes
+
+This documentation, the software and/or database are:
+
+Copyright (c) 1991-93, Grady Ward.  All Rights Reserved.
+3449 Martha Ct.
+Arcata, CA  95521-4884  USA
+(707) 826-7715 (voice/fax)
+grady@netcom.com
+
+License Agreement
+This documentation, software and/or database was developed
+and copyrighted by Grady Ward and is licensed, not sold, to you
+on a non-exclusive, non-transferable basis. The documentation,
+software and/or database and derivative works of this database
+may not be copied in whole or part except for archival purposes
+as provided by law.
+If you have paid the commercial license fee, Grady Ward explicitly
+grants you the limited right to create and market data structures or
+knowledge bases derived this work without further payment of a
+fee or royalty, as long as the purpose and effect of that data structure
+or knowledge base is substantially other than simply redistributing this
+Grady Ward lexical data.
+(In other words, you must make a reasonable effort to prevent
+unlicensed individuals and companies from accessing the source
+form of this data.)
+
+Willful copyright violations are both a civil and a criminal offense [17USC500]
+
+Disclaimer of Warranty
+This documentation, software and/or database is sold "as is" and
+without express or implied warranties as to performance or
+merchantability for a particular purpose.  The user is advised
+to test the documentation, software and/or database thoroughly
+before relying on it. The user assumes the entire risk of using
+this documentation, software and/or database and any liability
+of seller or manufacturer will be limited to product replacement
+or refund of the license fee.
+
+Moby Thesaurus is the largest and most comprehensive thesaurus
+data source in English available for commercial use.  This second
+edition has been thoroughly revised adding more than 5,000 root
+words (to total more than 30,000) with an additional _million_
+synonyms and related terms (to total more than 2.5 _million_
+synonyms and related terms). Although this thesaurus is provided
+in a very simple ASCII format suitable to viewing, editing, and
+automatic parsing, most users will consider reformatting schemes
+to represent the data in a more economical form, such as table
+of related terms whose index can be shared by many roots.
+This is roughly the technique used by the thesaurus in print form
+that has the large index coupled with the synonyms under abstract
+(and arbitrary) headings in the front matter. Tables of related
+terms can be stored in, for example, LZ compressed form until
+actually required by the application. Combining such schemes
+could easily reduce the storage requirement of this data by an
+order of magnitude or more. The supplementary file, roget13a.txt,
+provides a small thesaurus already organized in this form that you
+may wish to use as a guide when developing your own categories
+of synonyms. Also, of course, uncommon words can be stripped
+out according to the developer's criterion, keeping only the core
+and most oftenly used information. Once unarchived, the database
+format is flat-file ASCII: each record (delimited from other records
+with a terminal carriage return/linefeed [ASCII 13/10] character) is
+of the form:
+(In this example, the root word is 'frill', which is always
+the first word of the list. The synonyms and related words are listed
+in ASCII alphabetical order after the root. Each entry, including
+the root, is followed by a comma. The last entry in a record is
+followed by a carriage return/linefeed [ASCII 13/10].)
+
+frill,addition,adornment,amenity,beading,beauties,bedizenment,
+binding,bonus, bordering,bordure,bravery,chiffon,clinquant,colors,
+colors of rhetoric, crease,creasing,crimp,crisp,decoration,dog-ear,
+double,double over, doubling,duplication, duplication of effort,
+duplicature,edging,elegant variation,embellishment,embroidery,
+enfold,expletive,extra,extra added attraction,extra dash,
+extravagance,fat,featherbedding,festoons,figure,figure of speech,
+filigree,filling,fillip, fimbria,fimbriation,fine writing,finery,flection,
+flexure,floridity,floridness,flounce,flourish,floweriness,
+flowers of speech,flute,fold,fold over,folderol,foofaraw,frilliness,
+frilling,frills,frills and furbelows,fringe,frippery,froufrou,furbelow,
+fuss,gaiety,galloon, gather,gaudery,gewgaw,gilding,gilt,gingerbread,
+hem,infold,interfold, jazz,lagniappe,lap over,lapel,lappet,list,lushness,
+luxuriance,luxury,motif,needlessness,ornament,ornamentation,
+ostentation,overadornment,overlap,padding, paste,payroll padding,
+plait,plat,pleat,pleonasm,plica,plicate, plication,plicature,ply,premium,
+prolixity,purple patches,quill,redundance, redundancy,ruche,ruching,
+ruff,ruffle,selvage, showiness,skirting,something extra,stuffing,superaddition,
+superfluity,superfluousness,tautology,tinsel,trappings,trickery,trimming,
+trumpery,tuck,turn over,twill,twist,unnecessariness,valance,verbosity,
+welt,wrinkle[carriage return]
+
+Part-of-Speech information is not stored with this thesaurus.
+Grady Ward supplies a separate lexical database providing the
+part(s)-of-speech for a large collection (>200,000) of English
+words and phrases that can be used in conjunction with this
+list to supply POS information if needed by the particular application.

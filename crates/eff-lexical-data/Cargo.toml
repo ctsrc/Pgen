@@ -1,0 +1,12 @@
+[package]
+name = "eff-lexical-data"
+description = "EFF Lexical Data"
+license = "ISC"
+readme = "README.md"
+repository = "https://github.com/ctsrc/Pgen/crates/eff-lexical-data"
+version = "1.0.0-rc.1"
+authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
+categories = ["science", "data-structures", "no-std"]
+edition = "2021"
+
+[dependencies]

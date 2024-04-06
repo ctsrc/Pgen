@@ -1,0 +1,59 @@
+QUICK START
+
+18 May 93
+
+Copy all the files on all the disks to a folder on your hard disk (make sure you
+have about four megabytes of free space on your hard disk for each disk of
+Moby product).
+After copying all the files, type BUILD and press (enter).
+The files that are extracted may be viewed and manipulated by any capable
+text editor or word processor, such as Microsoft Word 5.x.
+
+Moby (tm) Language Documentation Notes			
+
+This documentation, the software and/or database are:
+
+Copyright (c) 1988-93, Grady Ward.  All Rights Reserved.
+3449 Martha Ct.
+Arcata, CA  95521-4884  USA
+(707) 826-7715 (voice/fax)
+grady@netcom.com
+
+License Agreement
+
+This documentation, software and/or database was developed and copyrighted
+by Grady Ward and is licensed, not sold, to you on a non-exclusive, 
+non-transferable basis. The documentation, software and/or database and 
+derivative works of this database may not be copied in whole or part except 
+for archival purposes as provided by law.
+If you have purchased the commercial license, Grady Ward explicitly 
+grants you the limited right to create and market data structures or
+knowledge bases derived this work without further payment of a
+license fee as long as the purpose and effect of that data structure or
+knowledge base is other than redistributing that Grady Ward data
+structure or database. 
+(In other words, you must make a reasonable effort to prevent unlicensed
+individuals and companies from accessing the source form of this data.)
+
+Willful copyright violations are both a civil and a criminal offense [17USC500]		                                
+
+Disclaimer of Warranty
+
+This documentation, software and/or database is sold "as is" and without 
+express or implied warranties as to performance or merchantability for a 
+particular purpose.  The user is advised to test the documentation, software 
+and/or database thoroughly before relying on it.  The user assumes the 
+entire risk of using this documentation, software and/or database and 
+any liability of seller or manufacturer will be limited to product replacement 
+or refund of the license fee.
+
+CONTENTS
+
+Word lists in five of the world's great languages:
+
+FRENCH      number of words 138257  size in bytes 1524757 
+GERMAN     number of words 159809  size in bytes 2055986 
+ITALIAN     number of words    60453  size in bytes   561981 
+JAPANESE  number of words 115523  size in bytes   934783 
+SPANISH    number of words   86059  size in bytes    850523
+ Total          number of words  560101 size in bytes    5928030
