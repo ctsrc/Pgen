@@ -3,7 +3,7 @@ name = "pgen"
 description = "Passphrase Generator"
 license = "ISC"
 readme = "README.md"
-repository = "https://github.com/ctsrc/Pgen"
+repository = "https://github.com/ctsrc/Pgen/crates/pgen"
 version = "2.0.0-alpha.1"
 authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
 categories = ["command-line-utilities", "cryptography"]
@@ -12,3 +12,4 @@ edition = "2021"
 [dependencies]
 rand = { workspace = true }
 clap = { workspace = true }
+lexical-data = { path = "../lexical-data", version = "1.0.0-rc.1" }

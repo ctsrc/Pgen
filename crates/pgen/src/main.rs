@@ -17,13 +17,11 @@
 #![forbid(unsafe_code)]
 
 use clap::{Parser, ValueEnum};
+use lexical_data::{WL_AUTOCOMPLETE, WL_BIP39, WL_LONG, WL_SHORT};
 use rand::thread_rng;
 use rand::Rng;
 use std::io;
 use std::io::{stdin, stdout, Write};
-
-// https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
-include!(concat!(env!("OUT_DIR"), "/wordlists.rs"));
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]

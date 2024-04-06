@@ -7,7 +7,7 @@ use std::path::Path;
 
 /// Extract words from the EFF wordlists
 fn words_eff(mut f_dest: &File, const_name: &str, fname_src: &str) {
-    write!(f_dest, "const {const_name}: &[&str] = &[").unwrap();
+    write!(f_dest, "pub const {const_name}: &[&str] = &[").unwrap();
 
     let f_src = BufReader::new(File::open(fname_src).unwrap());
     for line in f_src.lines() {
@@ -25,7 +25,7 @@ fn words_eff(mut f_dest: &File, const_name: &str, fname_src: &str) {
 
 /// Extract words from simple wordlists
 fn words_simple(mut f_dest: &File, const_name: &str, fname_src: &str) {
-    write!(f_dest, "const {const_name}: &[&str] = &[").unwrap();
+    write!(f_dest, "pub const {const_name}: &[&str] = &[").unwrap();
 
     let f_src = BufReader::new(File::open(fname_src).unwrap());
     for line in f_src.lines() {
@@ -46,12 +46,8 @@ fn main() {
     let dest_path = Path::new(&out_dir).join("wordlists.rs");
     let f = File::create(dest_path).unwrap();
 
-    words_eff(
-        &f,
-        "WL_AUTOCOMPLETE",
-        "../../data/eff_short_wordlist_2_0.txt",
-    );
-    words_eff(&f, "WL_LONG", "../../data/eff_large_wordlist.txt");
-    words_eff(&f, "WL_SHORT", "../../data/eff_short_wordlist_1.txt");
-    words_simple(&f, "WL_BIP39", "../../data/bip39_en_wordlist.txt");
+    words_eff(&f, "WL_AUTOCOMPLETE", "data/eff_short_wordlist_2_0.txt");
+    words_eff(&f, "WL_LONG", "data/eff_large_wordlist.txt");
+    words_eff(&f, "WL_SHORT", "data/eff_short_wordlist_1.txt");
+    words_simple(&f, "WL_BIP39", "data/bip39_en_wordlist.txt");
 }
