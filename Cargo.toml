@@ -4,5 +4,11 @@ resolver = "2"
 members = ["crates/bip39-lexical-data", "crates/eff-lexical-data", "crates/pgen", ]
 
 [workspace.dependencies]
+
+# workspace deps
+bip39-lexical-data = { path = "crates/bip39-lexical-data", version = "1.0.0" }
+eff-lexical-data = { path = "crates/eff-lexical-data", version = "1.0.0" }
+
+# crates.io deps
 rand = "0.8.5"
 clap = { version = "4.5.4", default-features = false, features = ["std", "derive", "help", "usage", "error-context"] }
