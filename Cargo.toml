@@ -1,14 +1,8 @@
-[package]
-name = "pgen"
-description = "Passphrase Generator"
-license = "ISC"
-readme = "README.md"
-repository = "https://github.com/ctsrc/Pgen"
-version = "2.0.0-alpha.1"
-authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
-categories = ["command-line-utilities", "cryptography"]
-edition = "2021"
+[workspace]
+resolver = "2"
 
-[dependencies]
+members = [ "crates/pgen", ]
+
+[workspace.dependencies]
 rand = "0.8.5"
 clap = { version = "4.5.4", default-features = false, features = ["std", "derive", "help", "usage", "error-context"] }

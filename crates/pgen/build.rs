@@ -49,9 +49,9 @@ fn main() {
     words_eff(
         &f,
         "WL_AUTOCOMPLETE",
-        "data/wordlists/eff_short_wordlist_2_0.txt",
+        "../../data/eff_short_wordlist_2_0.txt",
     );
-    words_eff(&f, "WL_LONG", "data/wordlists/eff_large_wordlist.txt");
-    words_eff(&f, "WL_SHORT", "data/wordlists/eff_short_wordlist_1.txt");
-    words_simple(&f, "WL_BIP39", "data/wordlists/bip39_en_wordlist.txt");
+    words_eff(&f, "WL_LONG", "../../data/eff_large_wordlist.txt");
+    words_eff(&f, "WL_SHORT", "../../data/eff_short_wordlist_1.txt");
+    words_simple(&f, "WL_BIP39", "../../data/bip39_en_wordlist.txt");
 }
