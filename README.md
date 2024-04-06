@@ -5,8 +5,9 @@
 [![License](https://img.shields.io/badge/license-ISC-blue?style=flat-square)](LICENSE)
 [![GitHub stars](https://img.shields.io/github/stars/ctsrc/Pgen?style=social)](https://github.com/ctsrc/Pgen#start-of-content)
 
-Generate passphrases using the [wordlists for random passphrases][EFFWL]
-made by the EFF.
+Generate passphrases using any of the following wordlists:
+* the [wordlists for random passphrases][EFFWL] made by the EFF
+* [BIP39][BIP39]
 
 The EFF wordlists consist of words that are easy to type and easy to remember.
 
@@ -17,9 +18,9 @@ different wordlists provided by the EFF.
 
 These are some examples of generated passphrases:
 
- * gimmick saffron nirvana superstore voicemail dedicate guacamole oftentimes dwindling kingdom shuttle upright
- * bobcat pulley yearbook nectar krypton pesticide relic sauna detergent amnesty dishcloth tapestry
- * porcupine identical occupation oxidize avalanche celery vaporizer dastardly vicinity enlarged hatchling urethane
+* gimmick saffron nirvana superstore voicemail dedicate guacamole oftentimes dwindling kingdom shuttle upright
+* bobcat pulley yearbook nectar krypton pesticide relic sauna detergent amnesty dishcloth tapestry
+* porcupine identical occupation oxidize avalanche celery vaporizer dastardly vicinity enlarged hatchling urethane
 
 ## Table of Contents
 
@@ -32,31 +33,64 @@ These are some examples of generated passphrases:
 ## Usage
 
 ```
-pgen [--dice] [-l | -s] [-n <n>] [-k <k>] [-e]
+pgen [-d] [-w <USE_WLIST>] [-n <n>] [-k <k>] [-e]
 pgen -h | --help
 pgen -V | --version
 ```
 
-### Options
+### Options and arguments
 
-`-l` Use long wordlist instead of autocomplete-optimized short wordlist.
-     Recommended for the creation of memorable passphrases since the
-     increased number of words as well as the greater effective word
-     length allows for good entropy with a lower amount of words
-     compared to the autocomplete-optimized short wordlist.
-     Mutually exclusive with option `-s`, `-b`.
+`-w` Specify wordlist to use.
 
-`-s` Use non-optimized short wordlist instead of autocomplete-optimized
-     short wordlist. Mutually exclusive with options `-l`, `-b`.
+* `eff-autocomplete` (default): Use *EFF's Short Wordlist #2*
 
-`-b` Use BIP39 wordlist. Mutually exclusive with options `-l`, `-s`.
+  Features:
+  - Each word has a unique three-character prefix. This means that software could
+    auto-complete words in the passphrase after the user has typed the first three characters.
+  - All words are at least an edit distance of 3 apart. This means that software could
+    correct any single typo in the user's passphrase (and in many cases more than one typo).
+
+  Details:
+  - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
+  - <https://www.eff.org/dice>
+
+* `eff-long`: Use *EFF's Long Wordlist*
+
+  Recommended for the creation of memorable passphrases since the increased number of words,
+  as well as the greater effective word length, allows for good entropy with a lower amount
+  of words compared to for example the autocomplete-optimized short wordlist.
+
+  Features:
+  - Contains words that are easy to type and remember.
+  - Built from a list of words that prioritizes the most recognized words
+    and then the most concrete words.
+  - Manually checked by EFF and attempted to remove as many profane, insulting, sensitive,
+    or emotionally-charged words as possible, and also filtered based on several public
+    lists of vulgar English words.
+
+  Details:
+  - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
+  - <https://www.eff.org/dice>
+
+* `eff-short`: Use *EFF's Short Wordlist #1*
+
+  Features:
+  - Designed to include the 1,296 most memorable and distinct words.
+
+  Details:
+  - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
+  - <https://www.eff.org/dice>
+
+* `bip39`: Use *BIP39* wordlist
+
+  Details:
+  - [BIP39][BIP39]
+  - <https://en.bitcoin.it/wiki/Seed_phrase>
 
 `-n` Specify the number of words to use *n*. Default value:
 
-  * Twelve (12) words if either of the short wordlists are being used
-    (meaning that the `-l` option was **not** specified).
-  * Ten (10) words if the large wordlist is being used (meaning that
-    the `-l` option was specified.)
+* Twelve (12) words if any of the short wordlists are being used.
+* Ten (10) words if the large wordlist is being used.
 
 `-k` Specify the number of passphrases to generate *k*. Default value: 1.
 
@@ -66,7 +100,7 @@ pgen -V | --version
 
 `--dice` Use physical six-sided dice instead of letting the computer pick
          words. Useful in case you distrust the ability or willingness of
-	 your computer to generate "sufficiently random" numbers.
+         your computer to generate "sufficiently random" numbers.
 
 `-h`, `--help` Show help and exit.
 
@@ -76,7 +110,8 @@ pgen -V | --version
 
 How many bits of entropy should your passphrase consist of?
 
-Looking at [the article about password strength on Wikipedia](https://en.wikipedia.org/wiki/Password_strength), you will find that the following is said:
+Looking at [the article about password strength on Wikipedia](https://en.wikipedia.org/wiki/Password_strength), you will
+find that the following is said:
 
 > The minimum number of bits of entropy needed for a password depends
 > on the threat model for the given application. If
@@ -116,7 +151,7 @@ sense to use a CSPRNG.
 ## Installation
 
 1. [Install Rust](https://www.rust-lang.org/en-US/install.html).
-2. Run `cargo install pgen`
-
+2. Run `cargo install -f pgen`
 
 [EFFWL]: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
+[BIP39]: https://en.bitcoin.it/wiki/BIP_0039

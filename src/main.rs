@@ -16,7 +16,7 @@
 
 #![forbid(unsafe_code)]
 
-use clap::Parser;
+use clap::{Parser, ValueEnum};
 use rand::thread_rng;
 use rand::Rng;
 use std::io;
@@ -31,19 +31,9 @@ struct Cli {
     /// Use physical six-sided dice instead of letting the computer pick words
     #[arg(short = 'd', long = "dice")]
     use_physical_dice: bool,
-    /// Use long wordlist
-    #[arg(short = 'l')]
-    use_long_wlist: bool,
-    /// Use non-optimized short wordlist
-    #[arg(short = 's', conflicts_with("use_long_wlist"))]
-    use_short_wlist: bool,
-    /// Use BIP39 wordlist
-    #[arg(
-        short = 'b',
-        conflicts_with("use_long_wlist"),
-        conflicts_with("use_short_wlist")
-    )]
-    use_bip39_wlist: bool,
+    /// Select wordlist to use
+    #[arg(short = 'w', long = "wordlist", value_enum, default_value_t)]
+    use_wlist: WordlistChoice,
     /// Specify the number of passphrases to generate k
     #[arg(short, default_value_t = 1, value_name = "k")]
     k: u32,
@@ -55,30 +45,76 @@ struct Cli {
     calculate_entropy: bool,
 }
 
+#[derive(Eq, PartialEq, Copy, Clone, Debug, ValueEnum)]
+enum WordlistChoice {
+    /// EFF's Short Wordlist #2
+    ///
+    /// Features:
+    /// - Each word has a unique three-character prefix. This means that software could
+    ///   auto-complete words in the passphrase after the user has typed the first three characters.
+    /// - All words are at least an edit distance of 3 apart. This means that software could
+    ///   correct any single typo in the user's passphrase (and in many cases more than one typo).
+    ///
+    /// Details:
+    /// - <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>
+    /// - <https://www.eff.org/dice>
+    EffAutocomplete,
+    /// EFF's Long Wordlist
+    ///
+    /// Features:
+    /// - Contains words that are easy to type and remember.
+    /// - Built from a list of words that prioritizes the most recognized words
+    ///   and then the most concrete words.
+    /// - Manually checked by EFF and attempted to remove as many profane, insulting, sensitive,
+    ///   or emotionally-charged words as possible, and also filtered based on several public
+    ///   lists of vulgar English words.
+    ///
+    /// Details:
+    /// - <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>
+    /// - <https://www.eff.org/dice>
+    EffLong,
+    /// EFF's Short Wordlist #1
+    ///
+    /// Features:
+    /// - Designed to include the 1,296 most memorable and distinct words.
+    ///
+    /// Details:
+    /// - <https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases>
+    /// - <https://www.eff.org/dice>
+    EffShort,
+    /// BIP39 wordlist
+    ///
+    /// Details:
+    /// - <https://en.bitcoin.it/wiki/BIP_0039>
+    /// - <https://en.bitcoin.it/wiki/Seed_phrase>
+    Bip39,
+}
+
+impl Default for WordlistChoice {
+    fn default() -> Self {
+        Self::EffAutocomplete
+    }
+}
+
 fn main() -> io::Result<()> {
     let cli = Cli::parse();
 
-    let wordlist = {
-        if cli.use_long_wlist {
-            WL_LONG
-        } else if cli.use_short_wlist {
-            WL_SHORT
-        } else if cli.use_bip39_wlist {
-            WL_BIP39
-        } else {
-            WL_AUTOCOMPLETE
-        }
+    let wordlist = match cli.use_wlist {
+        WordlistChoice::EffAutocomplete => WL_AUTOCOMPLETE,
+        WordlistChoice::EffLong => WL_LONG,
+        WordlistChoice::EffShort => WL_SHORT,
+        WordlistChoice::Bip39 => WL_BIP39,
     };
 
     // the EFF wordlists have lengths that are an exact power of 6,
     // whereas the bip39 wordlist does not
-    let num_dice: u32 = if cli.use_bip39_wlist {
+    let num_dice: u32 = if cli.use_wlist == WordlistChoice::Bip39 {
         // bip39 has 2048 words, which is a power of 2.
         // we need 11 dice because 6**11 / 3**11 = 2048,
         // i.e. we use 11 dice because it leads to a multiple
         // of the wordlist length
         11
-    } else if cli.use_long_wlist {
+    } else if cli.use_wlist == WordlistChoice::EffLong {
         // EFF long wordlist has 6**5 = 7776 words
         5
     } else {
@@ -91,7 +127,7 @@ fn main() -> io::Result<()> {
     let num_words = match cli.n {
         Some(n) => n,
         None => {
-            if cli.use_long_wlist {
+            if cli.use_wlist == WordlistChoice::EffLong {
                 10
             } else {
                 12
