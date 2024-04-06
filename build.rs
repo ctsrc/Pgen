@@ -5,7 +5,8 @@ use std::path::Path;
 
 // https://doc.rust-lang.org/cargo/reference/build-scripts.html#case-study-code-generation
 
-fn words(mut f_dest: &File, const_name: &str, fname_src: &str) {
+/// Extract words from the EFF wordlists
+fn words_eff(mut f_dest: &File, const_name: &str, fname_src: &str) {
     write!(f_dest, "const {const_name}: &[&str] = &[").unwrap();
 
     let f_src = BufReader::new(File::open(fname_src).unwrap());
@@ -22,7 +23,8 @@ fn words(mut f_dest: &File, const_name: &str, fname_src: &str) {
     f_dest.write_all(b"];").unwrap();
 }
 
-fn words_simpler(mut f_dest: &File, const_name: &str, fname_src: &str) {
+/// Extract words from simple wordlists
+fn words_simple(mut f_dest: &File, const_name: &str, fname_src: &str) {
     write!(f_dest, "const {const_name}: &[&str] = &[").unwrap();
 
     let f_src = BufReader::new(File::open(fname_src).unwrap());
@@ -44,8 +46,8 @@ fn main() {
     let dest_path = Path::new(&out_dir).join("wordlists.rs");
     let f = File::create(dest_path).unwrap();
 
-    words(&f, "WL_AUTOCOMPLETE", "data/wordlists/eff_short_wordlist_2_0.txt");
-    words(&f, "WL_LONG", "data/wordlists/eff_large_wordlist.txt");
-    words(&f, "WL_SHORT", "data/wordlists/eff_short_wordlist_1.txt");
-    words_simpler(&f, "WL_BIP39", "data/wordlists/bip39_en_wordlist.txt");
+    words_eff(&f, "WL_AUTOCOMPLETE", "data/wordlists/eff_short_wordlist_2_0.txt");
+    words_eff(&f, "WL_LONG", "data/wordlists/eff_large_wordlist.txt");
+    words_eff(&f, "WL_SHORT", "data/wordlists/eff_short_wordlist_1.txt");
+    words_simple(&f, "WL_BIP39", "data/wordlists/bip39_en_wordlist.txt");
 }
