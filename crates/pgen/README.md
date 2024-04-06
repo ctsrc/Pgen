@@ -25,7 +25,7 @@ These are some examples of generated passphrases:
 ## Table of Contents
 
 * [Usage](#usage)
-  - [Options](#options)
+  - [Options and arguments](#options-and-arguments)
 * [How many bits of entropy does your passphrase need?](#how-many-bits-of-entropy-does-your-passphrase-need)
 * [Is a CSPRNG really needed here?](#is-a-csprng-really-needed-here)
 * [Installation](#installation)
