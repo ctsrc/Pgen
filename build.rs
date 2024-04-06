@@ -46,7 +46,11 @@ fn main() {
     let dest_path = Path::new(&out_dir).join("wordlists.rs");
     let f = File::create(dest_path).unwrap();
 
-    words_eff(&f, "WL_AUTOCOMPLETE", "data/wordlists/eff_short_wordlist_2_0.txt");
+    words_eff(
+        &f,
+        "WL_AUTOCOMPLETE",
+        "data/wordlists/eff_short_wordlist_2_0.txt",
+    );
     words_eff(&f, "WL_LONG", "data/wordlists/eff_large_wordlist.txt");
     words_eff(&f, "WL_SHORT", "data/wordlists/eff_short_wordlist_1.txt");
     words_simple(&f, "WL_BIP39", "data/wordlists/bip39_en_wordlist.txt");
