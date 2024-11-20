@@ -17,29 +17,47 @@ randomly selected from the autocomplete-optimized wordlist. Be sure to
 [read the article][EFFWL] to learn about the difference between the
 different wordlists provided by the EFF.
 
-These are some examples of generated passphrases:
-
-* gimmick saffron nirvana superstore voicemail dedicate guacamole oftentimes dwindling kingdom shuttle upright
-* bobcat pulley yearbook nectar krypton pesticide relic sauna detergent amnesty dishcloth tapestry
-* porcupine identical occupation oxidize avalanche celery vaporizer dastardly vicinity enlarged hatchling urethane
-
-Latest version:
-
-```zsh
-pgen --version
-```
-
-```text
-pgen 3.0.0-alpha.1
-```
-
 ## Table of Contents
 
+* [Examples of generated passphrases](#examples-of-generated-passphrases)
 * [Usage](#usage)
     - [Options and arguments](#options-and-arguments)
 * [How many bits of entropy does your passphrase need?](#how-many-bits-of-entropy-does-your-passphrase-need)
 * [Is a CSPRNG really needed here?](#is-a-csprng-really-needed-here)
 * [Installation](#installation)
+* [Latest version available](#latest-version-available)
+
+## Examples of generated passphrases
+
+### Using the default wordlist
+
+```zsh
+pgen
+```
+
+> spyglass eruption sapphire wifeless thimble breath fossil thwarting sedative peroxide vagrancy earlobe
+
+### Using the EFF long wordlist
+
+```zsh
+pgen -w eff-long
+```
+
+> flashy tackle semifinal endowment trekker exhume citrus venus carload implant
+
+### Using BIP39 wordlist, and custom number of words
+
+```zsh
+pgen -w bip39 -n 24
+```
+
+> sword relief this any peanut uncle supreme month impose learn rose ramp double auction course mutual bench elder
+> unfair dizzy harbor use casino pledge
+
+> [!NOTE]
+> In the current version, BIP39 wordlist is available but the BIP39 algorithm itself is not yet used.
+> In the upcoming `v3.0.0` release, the BIP39 algorithm will be implemented so that when you use
+> the BIP39 wordlist it will generate mnemonics that can be used for generation of valid Bitcoin wallets.
 
 ## Usage
 
@@ -166,6 +184,16 @@ sense to use a CSPRNG.
 
 1. [Install Rust](https://www.rust-lang.org/en-US/install.html).
 2. Run `cargo install -f pgen@3.0.0-alpha.1`
+
+## Latest version available
+
+```zsh
+pgen --version
+```
+
+```text
+pgen 3.0.0-alpha.1
+```
 
 [EFFWL]: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
 
