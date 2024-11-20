@@ -47,17 +47,17 @@ pgen -w eff-long
 
 ### Using BIP39 wordlist, and custom number of words
 
+> [!NOTE]
+> In the current version, BIP39 wordlist is available but the BIP39 algorithm itself is not yet used.
+> In the upcoming `v3.0.0` release, the BIP39 algorithm will be implemented so that when you use
+> the BIP39 wordlist it will generate mnemonics that can be used for generation of valid Bitcoin wallets.
+
 ```zsh
 pgen -w bip39 -n 24
 ```
 
 > sword relief this any peanut uncle supreme month impose learn rose ramp double auction course mutual bench elder
 > unfair dizzy harbor use casino pledge
-
-> [!NOTE]
-> In the current version, BIP39 wordlist is available but the BIP39 algorithm itself is not yet used.
-> In the upcoming `v3.0.0` release, the BIP39 algorithm will be implemented so that when you use
-> the BIP39 wordlist it will generate mnemonics that can be used for generation of valid Bitcoin wallets.
 
 ## Usage
 
