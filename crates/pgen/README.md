@@ -87,6 +87,7 @@ pgen -V | --version
 `-w` Specify wordlist to use.
 
 * `eff-autocomplete` (default): Use *EFF's Short Wordlist #2*
+  (EFF's "short word list" with words that have unique three-character prefixes)
 
   Features:
     - Each word has a unique three-character prefix. This means that software could
@@ -99,6 +100,7 @@ pgen -V | --version
     - <https://www.eff.org/dice>
 
 * `eff-long`: Use *EFF's Long Wordlist*
+  (EFF's "long word list")
 
   Recommended for the creation of memorable passphrases since the increased number of words,
   as well as the greater effective word length, allows for good entropy with a lower amount
@@ -117,6 +119,7 @@ pgen -V | --version
     - <https://www.eff.org/dice>
 
 * `eff-short`: Use *EFF's Short Wordlist #1*
+  (EFF's "general short word list")
 
   Features:
     - Designed to include the 1,296 most memorable and distinct words.
@@ -125,7 +128,7 @@ pgen -V | --version
     - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
     - <https://www.eff.org/dice>
 
-* `bip39`: Use *BIP39* wordlist
+* `bip39`: Use *BIP39* English wordlist
 
   Details:
     - [BIP39][BIP39]
@@ -153,6 +156,59 @@ your computer to generate "sufficiently random" numbers.
 
 `-V`, `--version` Print version information and exit.
 
+## Calculation of entropy
+
+When calculating the entropy of a password or a passphrase,
+[one must assume that the password generation procedure is known to the attacker](https://crypto.stackexchange.com/a/376).
+As such, the strength of the passphrases that `pgen` generate are not weakened
+in and of itself by the fact that the wordlists we use are publicly known.
+
+### EFF wordlists
+
+When one of the EFF wordlists is used, you have the following total number of distinct words
+to pick from the respective list:
+
+- 7776 words in EFF's "long word list" (`eff-long`)
+- 1296 words in EFF's "general short word list" (`eff-short`)
+- 1296 words in EFF's "short word list" with words that have unique three-character prefixes (`eff-autocomplete`)
+
+The number of bits of entropy added by each randomly selected word from these EFF wordlists
+depends on the total number of words that are in the list we are selecting the words from.
+
+To calculate the entropy added by each word, we take the binary logarithm of the number of words total in the wordlist:
+
+- log2(7776) ~= `12.92` bits of entropy added from each randomly selected word in the "long word list".
+- log2(1296) ~= `10.33` bits of entropy added from each randomly selected word in one of the EFF's short word lists.
+
+Then:
+
+- Creating a passphrase consisting of 10 randomly selected words from the "long word list" gives
+  a passphrase with log2(7776^10) ~= `129.25` bits of entropy.
+- Creating a passphrase consisting of 12 randomly selected words from one of the EFF's short word lists gives
+  a passphrase with log2(1296^12) ~= `124.08` bits of entropy.
+
+### BIP39 English wordlist and BIP39 algorithm
+
+When using the BIP39 algorithm, the passphrase is derived directly from an entropy of random bits,
+which are then padded with bits from a checksum at the end.
+
+For example, for a BIP39 mnemonic sentence consisting of 12 words, one has to use 128 random bits
+appended by 4 bits of checksum bits.
+
+The checksum bits do not add entropy, nor are any of the initial entropy bits discarded.
+
+So the entropy of a BIP39 mnemonic sentence is simply the number of random bits
+it was generated from in the first place.
+
+Specifically, BIP39 has five different possible mnemonic sentence lengths, each with
+the following corresponding number of bits of entropy:
+
+- `128` bits of entropy for a BIP39 mnemonic sentence consisting of 12 words.
+- `160` bits of entropy for a BIP39 mnemonic sentence consisting of 15 words.
+- `192` bits of entropy for a BIP39 mnemonic sentence consisting of 18 words.
+- `224` bits of entropy for a BIP39 mnemonic sentence consisting of 21 words.
+- `256` bits of entropy for a BIP39 mnemonic sentence consisting of 24 words.
+
 ## How many bits of entropy does your passphrase need?
 
 How many bits of entropy should your passphrase consist of?
@@ -178,22 +234,15 @@ weak hashing algorithms such as MD5 were used, it is the opinion of the
 author that the neighbourhood of 128 bits of entropy is in fact
 an appropriate default for such use.
 
-When calculating the entropy of a password or a passphrase,
-[one must assume that the password generation procedure is known to the attacker](https://crypto.stackexchange.com/a/376).
-Hence with 12 words from either of the short wordlists, each of which
-consist of 1296 words, we get a password entropy of log2(1296^12) ~=
-124.08 bits. Similarily, with 10 words from the long wordlist (7776 words),
-we get a password entropy of log2(7776^10) ~= 129.25 bits.
-
 ## Is a CSPRNG really needed here?
 
 Using a CSPRNG ensures uniform distribution of probability. This in turn
-ensures that the password entropy calculations are correct. Hence it makes
+ensures that the password entropy calculations are correct. Hence, it makes
 sense to use a CSPRNG.
 
 ## See also
 
-* `lastresort`(1) on [crates.io](https://crates.io/crates/base256) / [GitHub](https://github.com/ctsrc/Base256)
+* `lastresort`(1) on [crates.io](https://crates.io/crates/base256) or [GitHub](https://github.com/ctsrc/Base256)
 
 [EFFWL]: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
 

@@ -16,6 +16,8 @@
 
 #![forbid(unsafe_code)]
 
+mod bip39_algorithm;
+
 use bip39_lexical_data::WL_BIP39;
 use clap::{Parser, ValueEnum};
 use eff_lexical_data::{WL_AUTOCOMPLETE, WL_LONG, WL_SHORT};
