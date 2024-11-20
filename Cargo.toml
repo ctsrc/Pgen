@@ -10,5 +10,7 @@ bip39-lexical-data = { path = "crates/bip39-lexical-data", version = "1.0.0" }
 eff-lexical-data = { path = "crates/eff-lexical-data", version = "1.0.0" }
 
 # crates.io deps
-rand = "0.8.5"
+anyhow = { version = "1.0.93", features = ["backtrace"] }
 clap = { version = "4.5.21", default-features = false, features = ["std", "derive", "help", "usage", "error-context"] }
+rand = "0.8.5"
+thiserror = "2.0.3"

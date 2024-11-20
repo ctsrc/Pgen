@@ -6,6 +6,7 @@
 [![GitHub stars](https://img.shields.io/github/stars/ctsrc/Pgen?style=social)](https://github.com/ctsrc/Pgen#start-of-content)
 
 Generate passphrases using any of the following wordlists:
+
 * the [wordlists for random passphrases][EFFWL] made by the EFF
 * [BIP39][BIP39]
 
@@ -25,7 +26,7 @@ These are some examples of generated passphrases:
 ## Table of Contents
 
 * [Usage](#usage)
-  - [Options and arguments](#options-and-arguments)
+    - [Options and arguments](#options-and-arguments)
 * [How many bits of entropy does your passphrase need?](#how-many-bits-of-entropy-does-your-passphrase-need)
 * [Is a CSPRNG really needed here?](#is-a-csprng-really-needed-here)
 * [Installation](#installation)
@@ -45,14 +46,14 @@ pgen -V | --version
 * `eff-autocomplete` (default): Use *EFF's Short Wordlist #2*
 
   Features:
-  - Each word has a unique three-character prefix. This means that software could
-    auto-complete words in the passphrase after the user has typed the first three characters.
-  - All words are at least an edit distance of 3 apart. This means that software could
-    correct any single typo in the user's passphrase (and in many cases more than one typo).
+    - Each word has a unique three-character prefix. This means that software could
+      auto-complete words in the passphrase after the user has typed the first three characters.
+    - All words are at least an edit distance of 3 apart. This means that software could
+      correct any single typo in the user's passphrase (and in many cases more than one typo).
 
   Details:
-  - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
-  - <https://www.eff.org/dice>
+    - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
+    - <https://www.eff.org/dice>
 
 * `eff-long`: Use *EFF's Long Wordlist*
 
@@ -61,46 +62,49 @@ pgen -V | --version
   of words compared to for example the autocomplete-optimized short wordlist.
 
   Features:
-  - Contains words that are easy to type and remember.
-  - Built from a list of words that prioritizes the most recognized words
-    and then the most concrete words.
-  - Manually checked by EFF and attempted to remove as many profane, insulting, sensitive,
-    or emotionally-charged words as possible, and also filtered based on several public
-    lists of vulgar English words.
+    - Contains words that are easy to type and remember.
+    - Built from a list of words that prioritizes the most recognized words
+      and then the most concrete words.
+    - Manually checked by EFF and attempted to remove as many profane, insulting, sensitive,
+      or emotionally-charged words as possible, and also filtered based on several public
+      lists of vulgar English words.
 
   Details:
-  - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
-  - <https://www.eff.org/dice>
+    - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
+    - <https://www.eff.org/dice>
 
 * `eff-short`: Use *EFF's Short Wordlist #1*
 
   Features:
-  - Designed to include the 1,296 most memorable and distinct words.
+    - Designed to include the 1,296 most memorable and distinct words.
 
   Details:
-  - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
-  - <https://www.eff.org/dice>
+    - [Deep Dive: EFF's New Wordlists for Random Passphrases][EFFWL] (2016)
+    - <https://www.eff.org/dice>
 
 * `bip39`: Use *BIP39* wordlist
 
   Details:
-  - [BIP39][BIP39]
-  - <https://en.bitcoin.it/wiki/Seed_phrase>
+    - [BIP39][BIP39]
+    - <https://en.bitcoin.it/wiki/Seed_phrase>
 
 `-n` Specify the number of words to use *n*. Default value:
 
 * Twelve (12) words if any of the short wordlists are being used.
 * Ten (10) words if the large wordlist is being used.
 
+Note: When BIP39 wordlist is used, the number of words to use must be one of:
+12, 15, 18, 21, or 24.
+
 `-k` Specify the number of passphrases to generate *k*. Default value: 1.
 
 `-e` Calculate and print the entropy for the passphrase(s) that would be
-     generated with the given settings. What is password entropy?
-     [Entropy is a measure of what the password could have been, so it relates to the selection process](https://crypto.stackexchange.com/a/376).
+generated with the given settings. What is password entropy?
+[Entropy is a measure of what the password could have been, so it relates to the selection process](https://crypto.stackexchange.com/a/376).
 
 `--dice` Use physical six-sided dice instead of letting the computer pick
-         words. Useful in case you distrust the ability or willingness of
-         your computer to generate "sufficiently random" numbers.
+words. Useful in case you distrust the ability or willingness of
+your computer to generate "sufficiently random" numbers.
 
 `-h`, `--help` Show help and exit.
 
@@ -154,4 +158,5 @@ sense to use a CSPRNG.
 2. Run `cargo install -f pgen`
 
 [EFFWL]: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
+
 [BIP39]: https://en.bitcoin.it/wiki/BIP_0039
