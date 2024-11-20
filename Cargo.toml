@@ -11,4 +11,4 @@ eff-lexical-data = { path = "crates/eff-lexical-data", version = "1.0.0" }
 
 # crates.io deps
 rand = "0.8.5"
-clap = { version = "4.5.4", default-features = false, features = ["std", "derive", "help", "usage", "error-context"] }
+clap = { version = "4.5.21", default-features = false, features = ["std", "derive", "help", "usage", "error-context"] }
