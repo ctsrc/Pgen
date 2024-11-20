@@ -20,12 +20,12 @@ different wordlists provided by the EFF.
 ## Table of Contents
 
 * [Examples of generated passphrases](#examples-of-generated-passphrases)
+* [Latest version available](#latest-version-available)
+* [Installation](#installation)
 * [Usage](#usage)
     - [Options and arguments](#options-and-arguments)
 * [How many bits of entropy does your passphrase need?](#how-many-bits-of-entropy-does-your-passphrase-need)
 * [Is a CSPRNG really needed here?](#is-a-csprng-really-needed-here)
-* [Installation](#installation)
-* [Latest version available](#latest-version-available)
 
 ## Examples of generated passphrases
 
@@ -58,6 +58,21 @@ pgen -w bip39 -n 24
 
 > sword relief this any peanut uncle supreme month impose learn rose ramp double auction course mutual bench elder
 > unfair dizzy harbor use casino pledge
+
+## Latest version available
+
+```zsh
+pgen --version
+```
+
+```text
+pgen 3.0.0-alpha.1
+```
+
+## Installation
+
+1. [Install Rust](https://www.rust-lang.org/en-US/install.html).
+2. Run `cargo install -f pgen@3.0.0-alpha.1`
 
 ## Usage
 
@@ -179,21 +194,6 @@ sense to use a CSPRNG.
 ## See also
 
 * `lastresort`(1) on [crates.io](https://crates.io/crates/base256) / [GitHub](https://github.com/ctsrc/Base256)
-
-## Installation
-
-1. [Install Rust](https://www.rust-lang.org/en-US/install.html).
-2. Run `cargo install -f pgen@3.0.0-alpha.1`
-
-## Latest version available
-
-```zsh
-pgen --version
-```
-
-```text
-pgen 3.0.0-alpha.1
-```
 
 [EFFWL]: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
 
