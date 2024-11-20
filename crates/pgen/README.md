@@ -23,6 +23,16 @@ These are some examples of generated passphrases:
 * bobcat pulley yearbook nectar krypton pesticide relic sauna detergent amnesty dishcloth tapestry
 * porcupine identical occupation oxidize avalanche celery vaporizer dastardly vicinity enlarged hatchling urethane
 
+Latest version:
+
+```zsh
+pgen --version
+```
+
+```text
+pgen 3.0.0-alpha.1
+```
+
 ## Table of Contents
 
 * [Usage](#usage)
