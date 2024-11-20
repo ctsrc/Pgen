@@ -155,7 +155,7 @@ sense to use a CSPRNG.
 ## Installation
 
 1. [Install Rust](https://www.rust-lang.org/en-US/install.html).
-2. Run `cargo install -f pgen`
+2. Run `cargo install -f pgen@3.0.0-alpha.1`
 
 [EFFWL]: https://www.eff.org/deeplinks/2016/07/new-wordlists-random-passphrases
 
