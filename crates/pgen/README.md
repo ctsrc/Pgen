@@ -189,7 +189,7 @@ Then:
 
 ### BIP39 English wordlist and BIP39 algorithm
 
-When using the BIP39 algorithm, the passphrase is derived directly from an entropy of random bits,
+When using the BIP39 algorithm, the passphrase is derived directly from a specific number of random bits,
 which are then padded with bits from a checksum at the end.
 
 For example, for a BIP39 mnemonic sentence consisting of 12 words, one has to use 128 random bits
@@ -197,7 +197,7 @@ appended by 4 bits of checksum bits.
 
 The checksum bits do not add entropy, nor are any of the initial entropy bits discarded.
 
-So the entropy of a BIP39 mnemonic sentence is simply the number of random bits
+The entropy of a BIP39 mnemonic sentence is simply the number of random bits
 it was generated from in the first place.
 
 Specifically, BIP39 has five different possible mnemonic sentence lengths, each with
