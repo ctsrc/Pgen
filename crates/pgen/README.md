@@ -76,7 +76,7 @@ pgen 3.0.0-alpha.1
 
 ## Usage
 
-```
+```text
 pgen [-d] [-w <USE_WLIST>] [-n <n>] [-k <k>] [-e]
 pgen -h | --help
 pgen -V | --version
