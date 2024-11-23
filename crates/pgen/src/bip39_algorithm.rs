@@ -1,3 +1,4 @@
+use bip39_lexical_data::WL_BIP39;
 use sha2::{Digest, Sha256};
 
 /// Calculate BIP39 checksum (CS) bits given entropy bits.
@@ -27,9 +28,19 @@ fn calculate_cs_bits(ent: &[u8]) -> u8 {
     hash[0] >> shift
 }
 
+/// Get BIP39 English word from 11 bits.
+fn get_word_from_11_bits(value: u16) -> &'static str {
+    // The caller is responsible for ensuring that only the lower 11 bits are set.
+    const MAX_ACCEPTABLE_VALUE: u16 = 0b11111111111;
+    if value > MAX_ACCEPTABLE_VALUE {
+        unreachable!();
+    }
+    WL_BIP39[value as usize]
+}
+
 #[cfg(test)]
 mod test {
-    use crate::bip39_algorithm::calculate_cs_bits;
+    use crate::bip39_algorithm::{calculate_cs_bits, get_word_from_11_bits};
     use test_case::test_case;
 
     // From <https://github.com/trezor/python-mnemonic/blob/b57a5ad77a981e743f4167ab2f7927a55c1e82a8/vectors.json#L3-L8>:
@@ -77,5 +88,21 @@ mod test {
     fn calculates_cs_bits_correctly(ent: &[u8], cs_expected: u8) {
         let cs_actual = calculate_cs_bits(ent);
         assert_eq!(cs_expected, cs_actual);
+    }
+
+    #[test_case(0, "abandon"; "first word in list (index 0)")]
+    #[test_case(3, "about")]
+    #[test_case(102, "art")]
+    #[test_case(2047, "zoo"; "last word in list (index 2047)")]
+    fn gets_correct_word_from_11_bits(value: u16, expected_word: &str) {
+        let actual_word = get_word_from_11_bits(value);
+        assert_eq!(expected_word, actual_word);
+    }
+
+    #[test]
+    #[should_panic]
+    fn get_word_should_panic_when_more_than_11_bits_are_set() {
+        let value = 2048u16;
+        let _ = get_word_from_11_bits(value);
     }
 }
