@@ -1,3 +1,21 @@
+/*
+ * Copyright (c) 2024 Erik Nordstrøm <erik@nordstroem.no>
+ *
+ * Permission to use, copy, modify, and/or distribute this software for any
+ * purpose with or without fee is hereby granted, provided that the above
+ * copyright notice and this permission notice appear in all copies.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+ * WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+ * MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ * ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+ * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ * ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+ * OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+ */
+
+#![forbid(unsafe_code)]
+
 use bip39_lexical_data::WL_BIP39;
 use sha2::{Digest, Sha256};
 
@@ -38,9 +56,68 @@ fn get_word_from_11_bits(value: u16) -> &'static str {
     WL_BIP39[value as usize]
 }
 
+/// Extract 11 bit chunks from entropy bytes.
+///
+/// Returns a `Vec<u16>` of 11 bit chunks, along with an `usize` specifying
+/// the number of bits that are left over for checksum in the last `u16` element of the `Vec`.
+fn chunk_to_11_bit_groups(ent: &[u8]) -> (Vec<u16>, usize) {
+    let mut chunks = vec![];
+
+    // Initialize first output chunk. Initially empty.
+    let mut curr_output_chunk = 0u16;
+    // Number of bits left for curr chunk to be complete
+    let mut cc = 11;
+
+    for &curr_input_byte in ent.iter() {
+        eprintln!("curr_input_byte      {curr_input_byte:#010b}");
+
+        // Number of bits left unused in curr input byte
+        let mut iu = 8;
+
+        // Take all bits from input byte, filling output chunks.
+        let mut left_over = curr_input_byte;
+        while iu != 0 {
+            eprintln!("left over            {left_over:#010b}");
+            let take_n_bits = if cc >= iu { iu } else { cc };
+            cc -= take_n_bits;
+            eprintln!("cc                           {cc:#2}");
+            iu -= take_n_bits;
+            eprintln!("iu                           {cc:#2}");
+
+            let mask = 0xffu8 >> (8 - take_n_bits);
+
+            curr_output_chunk += ((curr_input_byte & mask) as u16) << cc;
+            eprintln!("curr_output_chunk {curr_output_chunk:#013b}");
+
+            if cc == 0 {
+                chunks.push(curr_output_chunk);
+                curr_output_chunk = 0;
+                cc = 11;
+            }
+            if iu != 0 {
+                left_over = curr_input_byte >> (8 - iu);
+            }
+        }
+        eprintln!();
+    }
+    if cc != 11 {
+        chunks.push(curr_output_chunk);
+    } else {
+        cc = 0;
+    }
+
+    for chunk in &chunks {
+        eprintln!("chunk             {chunk:#013b}");
+    }
+
+    (chunks, cc)
+}
+
 #[cfg(test)]
 mod test {
-    use crate::bip39_algorithm::{calculate_cs_bits, get_word_from_11_bits};
+    use crate::bip39_algorithm::{
+        calculate_cs_bits, chunk_to_11_bit_groups, get_word_from_11_bits,
+    };
     use test_case::test_case;
 
     // From <https://github.com/trezor/python-mnemonic/blob/b57a5ad77a981e743f4167ab2f7927a55c1e82a8/vectors.json#L3-L8>:
@@ -56,7 +133,7 @@ mod test {
     //
     // - 128 bits of "entropy" (all zero in this case).
     // - The 12th word in the mnemonic sentence is the 4th word (index 3) in the BIP39 English wordlist.
-    #[test_case(&[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 3; "128 bits of all zeros")]
+    #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 3; "with 128 bits of input of all zeros")]
     // From <https://github.com/trezor/python-mnemonic/blob/b57a5ad77a981e743f4167ab2f7927a55c1e82a8/vectors.json#L27-L32>:
     //
     // ```json
@@ -70,7 +147,7 @@ mod test {
     //
     // - 192 bits of "entropy" (all zero in this case).
     // - The 18th word in the mnemonic sentence is the 40th word (index 39) in the BIP39 English wordlist.
-    #[test_case(&[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 39; "192 bits of all zeros")]
+    #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 39; "with 192 bits of input of all zeros")]
     // From <https://github.com/trezor/python-mnemonic/blob/b57a5ad77a981e743f4167ab2f7927a55c1e82a8/vectors.json#L51-L56>:
     //
     // ```json
@@ -84,7 +161,7 @@ mod test {
     //
     // - 256 bits of "entropy" (all zero in this case).
     // - The 24th word in the mnemonic sentence is the 103rd word (index 102) in the BIP39 English wordlist.
-    #[test_case(&[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], 102; "256 bits of all zeros")]
+    #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 102; "with 256 bits of input of all zeros")]
     fn calculates_cs_bits_correctly(ent: &[u8], cs_expected: u8) {
         let cs_actual = calculate_cs_bits(ent);
         assert_eq!(cs_expected, cs_actual);
@@ -104,5 +181,32 @@ mod test {
     fn get_word_should_panic_when_more_than_11_bits_are_set() {
         let value = 2048u16;
         let _ = get_word_from_11_bits(value);
+    }
+
+    #[test_case(&[0xff, 0xff], &[0b11111111111, 0b11111000000], 6; "simple non-BIP39 input")]
+    // 128 bits of input should have 12 chunks of output, with 4 bits left in last byte for checksum, according to BIP39.
+    #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], &[0,0,0,0,0,0,0,0,0,0,0,0], 4; "with 128 bits of input of all zeros")]
+    // 160 bits of input should have 15 chunks of output, with 5 bits left in last byte for checksum, according to BIP39.
+    #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], &[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 5; "with 160 bits of input of all zeros")]
+    // 192 bits of input should have 18 chunks of output, with 6 bits left in last byte for checksum, according to BIP39.
+    #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], &[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 6; "with 192 bits of input of all zeros")]
+    // 224 bits of input should have 21 chunks of output, with 7 bits left in last byte for checksum, according to BIP39.
+    #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], &[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 7; "with 224 bits of input of all zeros")]
+    // 256 bits of input should have 24 chunks of output, with 8 bits left in last byte for checksum, according to BIP39.
+    #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], &[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 8; "with 256 bits of input of all zeros")]
+    fn chunks_correctly_to_11_bit_groups(
+        input_ent: &[u8],
+        expected_chunks: &[u16],
+        expected_n_cs: usize,
+    ) {
+        let (actual_chunks, actual_n_cs) = chunk_to_11_bit_groups(input_ent);
+        // The output chunks should be as we think they should be.
+        assert_eq!(expected_chunks, actual_chunks);
+        // The number of lower bits left for checksum in the last output chunk should be as we think it should.
+        assert_eq!(expected_n_cs, actual_n_cs);
+        // Only the lower 11 bits should be set in each output chunk.
+        for actual_chunk in actual_chunks {
+            assert_eq!(actual_chunk, actual_chunk & 0b11111111111);
+        }
     }
 }

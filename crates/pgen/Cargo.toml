@@ -8,6 +8,7 @@ version = "3.0.0-alpha.1"
 authors = ["Erik Nordstrøm <erik@nordstroem.no>"]
 categories = ["command-line-utilities", "cryptography"]
 edition = "2021"
+default-run = "pgen"
 
 [dependencies]
 anyhow = { workspace = true }
