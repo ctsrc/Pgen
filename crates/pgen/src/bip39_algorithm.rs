@@ -104,7 +104,7 @@ fn chunk_to_11_bit_groups(ent: &[u8]) -> (Vec<u16>, usize) {
             eprintln!("iu                           {iu:#2}");
 
             // Shift the output chunk with as many bits as we are taking
-            curr_output_chunk = curr_output_chunk << take_n_bits;
+            curr_output_chunk <<= take_n_bits;
             eprintln!("curr_output_chunk {curr_output_chunk:#013b}");
             // Shift the taken bits.
             bits_taken >>= iu;
