@@ -103,10 +103,10 @@ fn chunk_to_11_bit_groups(ent: &[u8]) -> (Vec<u16>, usize) {
             iu -= take_n_bits;
             eprintln!("iu                           {iu:#2}");
 
-            // Shift the output chunk with as many bits as we are taking
+            // Shift the output chunk with as many bits as we are taking, to make room for these bits.
             curr_output_chunk <<= take_n_bits;
             eprintln!("curr_output_chunk {curr_output_chunk:#013b}");
-            // Shift the taken bits.
+            // Shift the taken bits so that they don't have any trailing zeroes.
             bits_taken >>= iu;
             // Append the taken bits to the output chunk.
             curr_output_chunk ^= bits_taken as u16;
