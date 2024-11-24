@@ -56,6 +56,45 @@ fn get_word_from_11_bits(value: u16) -> &'static str {
     WL_BIP39[value as usize]
 }
 
+/// Extract 11 bit chunks from entropy bytes. Alternate implementation.
+///
+/// Returns a `Vec<u16>` of 11 bit chunks, along with an `usize` specifying
+/// the number of bits that are left over for checksum in the last `u16` element of the `Vec`.
+fn chunk_to_11_bit_groups_alt_via_u128(ent: &[u8]) -> (Vec<u16>, usize) {
+    // This function pads the last `u16` of output with zeros, leaving space for checksum.
+    // The checksum bits can then be added to the result elsewhere. Adding checksum is not
+    // a responsibility of this function.
+    let (chunk_size, checksum_num_bits): (usize, usize) = match ent.len() {
+        16 => (16, 4), // one full u128
+        20 => (4, 5),  // five u128 with 32 bits used each
+        24 => (8, 6),  // two u128 with 64 bits used each
+        28 => (4, 7),  // seven u128 with 32 bits used each
+        32 => (16, 8), // two full u128
+        // Caller is responsible for ensuring that array length matches one of the BIP39
+        // valid number of entropy bytes, available above. Since the chunk function is crate internal,
+        // we can assume that this is taken into account, and we can simply panic if it's not.
+        // No point in returning an error as the situation would be unrecoverable anyway.
+        _ => unreachable!(),
+    };
+
+    eprintln!("u128 has size {}", size_of::<u128>());
+    let groups_128 = ent
+        .chunks(chunk_size)
+        .map(|c| match ent.len() {
+            16 | 32 => u128::from_be_bytes(c.try_into().unwrap()),
+            24 => (u64::from_be_bytes(c.try_into().unwrap()) as u128) << 64,
+            _ => (u32::from_be_bytes(c.try_into().unwrap()) as u128) << 96,
+        })
+        .collect::<Vec<_>>();
+
+    for group_128 in groups_128 {
+        eprintln!("Group {group_128:#0128b}");
+    }
+
+    // TODO: Continue implementation of this function.
+    todo!();
+}
+
 /// Extract 11 bit chunks from entropy bytes.
 ///
 /// Returns a `Vec<u16>` of 11 bit chunks, along with an `usize` specifying
@@ -208,7 +247,6 @@ mod test {
         let _ = get_word_from_11_bits(value);
     }
 
-    #[test_case(&[0xff, 0xff], &[0b11111111111, 0b11111000000], 6; "simple non-BIP39 input")]
     // 128 bits of input should have 12 chunks of output, with 4 bits left in last byte for checksum, according to BIP39.
     #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], &[0,0,0,0,0,0,0,0,0,0,0,0], 4; "with 128 bits of input of all zeros")]
     #[test_case(&[0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff], &[0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0b11111110000], 4; "with 128 bits of input of all ones")]
