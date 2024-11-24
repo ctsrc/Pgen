@@ -69,38 +69,63 @@ fn chunk_to_11_bit_groups(ent: &[u8]) -> (Vec<u16>, usize) {
     let mut cc = 11;
 
     for &curr_input_byte in ent.iter() {
+        eprintln!("enter byte loop iteration");
+        eprintln!("num chunks output so far     {:2}", chunks.len());
         eprintln!("curr_input_byte      {curr_input_byte:#010b}");
+        eprintln!("curr_output_chunk {curr_output_chunk:#013b}");
+        eprintln!("cc                           {cc:#2}");
 
-        // Number of bits left unused in curr input byte
+        // Number of bits left to take in curr input byte
         let mut iu = 8;
+        eprintln!("iu                           {iu:#2}");
 
         // Take all bits from input byte, filling output chunks.
-        let mut left_over = curr_input_byte;
         while iu != 0 {
-            eprintln!("left over            {left_over:#010b}");
+            eprintln!("enter bit take iteration");
+            // Number of bits to take
             let take_n_bits = if cc >= iu { iu } else { cc };
+            eprintln!("take_n_bits                   {take_n_bits}");
+            // Mask for bits to take
+            //   - set the number of bits in the mask corresponding to the number of bits to take
+            let mask_take_bits = (0xffu16 << (8 - take_n_bits)) as u8;
+            eprintln!("mask_take_bits       {mask_take_bits:#010b}");
+            //   - shift the mask into position
+            let mask_take_bits = mask_take_bits >> (8 - iu);
+            eprintln!("mask_take_bits       {mask_take_bits:#010b}");
+            // Take bits from input byte
+            let mut bits_taken = curr_input_byte & mask_take_bits;
+            eprintln!("bits_taken           {bits_taken:#010b}");
+
+            // Update number of bits left for curr chunk to be complete with 11 bits taken from input.
             cc -= take_n_bits;
             eprintln!("cc                           {cc:#2}");
+            // Update the number of bits we have left to take from current byte of input.
             iu -= take_n_bits;
-            eprintln!("iu                           {cc:#2}");
+            eprintln!("iu                           {iu:#2}");
 
-            let mask = 0xffu8 >> (8 - take_n_bits);
-
-            curr_output_chunk += ((curr_input_byte & mask) as u16) << cc;
+            // Shift the output chunk with as many bits as we are taking
+            curr_output_chunk = curr_output_chunk << take_n_bits;
+            eprintln!("curr_output_chunk {curr_output_chunk:#013b}");
+            // Shift the taken bits.
+            bits_taken >>= iu;
+            // Append the taken bits to the output chunk.
+            curr_output_chunk ^= bits_taken as u16;
             eprintln!("curr_output_chunk {curr_output_chunk:#013b}");
 
+            // If current chunk is complete, save it and create a new empty chunk.
             if cc == 0 {
                 chunks.push(curr_output_chunk);
+                eprintln!("new chunk");
                 curr_output_chunk = 0;
                 cc = 11;
             }
-            if iu != 0 {
-                left_over = curr_input_byte >> (8 - iu);
-            }
+            eprintln!("end bit take iteration");
         }
+        eprintln!("end byte loop iteration");
         eprintln!();
     }
     if cc != 11 {
+        curr_output_chunk <<= cc;
         chunks.push(curr_output_chunk);
     } else {
         cc = 0;
@@ -189,6 +214,7 @@ mod test {
     #[test_case(&[0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff], &[0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0b11111110000], 4; "with 128 bits of input of all ones")]
     #[test_case(&[0xff,0,0xff,0,0xff,0,0xff,0,0xff,0,0xff,0,0xff,0,0xff,0], &[2040,63,1537,2032,127,1027,2016,255,7,1984,510,0], 4; "with 128 bits of input alternating between bytes all one and all zero")]
     #[test_case(&[0,0xff,0,0xff,0,0xff,0,0xff,0,0xff,0,0xff,0,0xff,0,0xff], &[7,1984,510,15,1920,1020,31,1792,2040,63,1537,2032], 4; "with 128 bits of input alternating between bytes all zero and all one")]
+    #[test_case(&[0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa,0xaa], &[1365,682,1365,682,1365,682,1365,682,1365,682,1365,672], 4; "with 128 bits of input alternating bits between one and zero")]
     // 160 bits of input should have 15 chunks of output, with 5 bits left in last byte for checksum, according to BIP39.
     #[test_case(&[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], &[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], 5; "with 160 bits of input of all zeros")]
     #[test_case(&[0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff], &[0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0x7ff,0b11111100000], 5; "with 160 bits of input of all ones")]
