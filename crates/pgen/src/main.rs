@@ -19,7 +19,7 @@
 use bip39_lexical_data::WL_BIP39;
 use clap::{Parser, ValueEnum};
 use eff_lexical_data::{WL_AUTOCOMPLETE, WL_LONG, WL_SHORT};
-use rand::thread_rng;
+use rand::rng;
 use rand::Rng;
 use std::io::{stdin, stdout, Write};
 use thiserror::Error;
@@ -184,11 +184,11 @@ fn main() -> anyhow::Result<()> {
                     }
                 }
             } else {
-                let mut rng = thread_rng();
+                let mut rng = rng();
 
                 for i in 0..num_words {
                     handle.write_all(
-                        wordlist[rng.gen_range(0..wordlist.len()) as usize].as_bytes(),
+                        wordlist[rng.random_range(0..wordlist.len()) as usize].as_bytes(),
                     )?;
                     if i < (num_words - 1) {
                         handle.write_all(b" ")?;

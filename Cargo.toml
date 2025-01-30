@@ -12,7 +12,7 @@ eff-lexical-data = { path = "crates/eff-lexical-data", version = "1.0.0" }
 # crates.io deps
 anyhow = { version = "1.0.93", features = ["backtrace"] }
 clap = { version = "4.5.21", default-features = false, features = ["std", "derive", "help", "usage", "error-context"] }
-rand = "0.8.5"
+rand = "0.9.0"
 sha2 = "0.10.8"
 test-case = "3.3.1"
 thiserror = "2.0.3"
